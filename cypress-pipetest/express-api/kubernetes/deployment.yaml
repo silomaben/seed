@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: express-app
+  namespace: jenkins
+  labels:
+    app: express-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: express-app
+  template:
+    metadata:
+      name: express-app
+      labels:
+        app: express-app
+    spec:
+      containers:
+        - name: express-app
+          image: silomaben/express-api
+          ports:
+            - containerPort: 3000
+          imagePullPolicy: Always
+      restartPolicy: Always
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: express-app-service
+  namespace: jenkins 
+spec:
+  selector:
+    app: express-app
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 3000
+  type: ClusterIP

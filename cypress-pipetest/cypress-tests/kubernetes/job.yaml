@@ -1,0 +1,24 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  namespace: jenkins
+  name: e2e-test-app-job
+spec:
+  template:
+    metadata:
+      name: e2e-test-app-pod
+    spec:
+      containers:
+        - name: e2e-test-app
+          image: silomaben/cypresstest-e2e
+          ports:
+            - containerPort: 80
+          imagePullPolicy: Always
+          volumeMounts:
+            - name: jenkins-vol
+              mountPath: /var/jenkins_home
+      restartPolicy: Never
+      volumes:
+        - name: jenkins-vol
+          persistentVolumeClaim: 
+            claimName: jenkins-pv-claim  

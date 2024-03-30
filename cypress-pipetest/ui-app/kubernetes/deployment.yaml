@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ui-app
+  namespace: jenkins 
+  labels:
+    app: ui-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ui-app
+  template:
+    metadata:
+      name: ui-app
+      labels:
+        app: ui-app
+    spec:
+      containers:
+        - name: ui-app
+          image: silomaben/ui-app
+          ports:
+            - containerPort: 80
+          imagePullPolicy: IfNotPresent
+      restartPolicy: Always
