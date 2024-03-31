@@ -292,7 +292,7 @@ def waitForReport(podName) {
 }
 
 
-def fileExistsInPod(podName, namespace, filePath) {
+def fileExists(podName, namespace, filePath) {
     def command = "kubectl exec -it -n ${namespace} ${podName} -- ls ${filePath}"
     return sh(script: command, returnStatus: true) == 0
 }
