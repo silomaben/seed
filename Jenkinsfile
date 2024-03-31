@@ -240,7 +240,7 @@ pipeline {
                     
 
                         // Run kubectl logs command and store the output
-                        logs = sh(script: "kubectl logs -n filetracker $cypressPod -c e2e-test-app", returnStdout: true).trim()
+                        logs = sh(script: "kubectl logs -n filetracker $cypressPod -c e2e-test-app", returnStdout: true)
                         echo "the logs are"
 
 
