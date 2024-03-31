@@ -9,8 +9,8 @@ RUN npm install
 COPY . .
 
 # Set the entry point script
-COPY entrypoint.sh /app/entrypoint.sh
-RUN chmod +x /app/entrypoint.sh
+COPY startingpoint.sh /app/startingpoint.sh
+RUN chmod +x /app/startingpoint.sh
 
 # Set the entry point
-ENTRYPOINT ["/app/entrypoint.sh"]
+ENTRYPOINT ["/app/startingpoint.sh"]
