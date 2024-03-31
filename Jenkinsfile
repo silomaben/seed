@@ -23,7 +23,12 @@ pipeline {
                 script {
                      
                         sh "kubectl get all -n filetracker"
-                        // sh "kubectl logs express-app-58464b4785-pr2g5 -n filetracker"
+                        sh "kubectl logs e2e-test-app-job-9qg2l -n filetracker"
+                        sh "kubectl logs e2e-test-app-job-bxhws -n filetracker"
+                        sh "kubectl logs e2e-test-app-job-d9sfn -n filetracker"
+                        sh "kubectl logs e2e-test-app-job-gszvw -n filetracker"
+                        sh "kubectl logs e2e-test-app-job-kfpj9 -n filetracker"
+                        sh "kubectl logs e2e-test-app-job-rhwd5 -n filetracker"
 
                     
                 }
