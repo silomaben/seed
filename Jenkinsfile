@@ -19,92 +19,92 @@ pipeline {
     stages {
          
 
-       stage('Kill pods that are running') {
-            steps {
-                script {
+    //    stage('Kill pods that are running') {
+    //         steps {
+    //             script {
                     
-                    // Initialize a variable to track if pods were found before
-                    def firstRunCompleted = false
-                    def breakLoop = false
-                    def podsFound = false
+    //                 // Initialize a variable to track if pods were found before
+    //                 def firstRunCompleted = false
+    //                 def breakLoop = false
+    //                 def podsFound = false
 
-                    // Loop until pods are not found or for a specific number of iterations
-                    def maxIterations = 5 // Adjust as needed
-                    def currentIteration = 0
+    //                 // Loop until pods are not found or for a specific number of iterations
+    //                 def maxIterations = 5 // Adjust as needed
+    //                 def currentIteration = 0
                     
 
-                    while (currentIteration < maxIterations && breakLoop==false) {
-                        echo "Checking pod existence and statuses..."
-                        def podStatuses = checkExistence()
-                        def expressAppExists = podStatuses['expressAppExists']
-                        def uiAppExists = podStatuses['uiAppExists']
-                        def expressAppServiceExists = podStatuses['expressAppServiceExists']
-                        def uiAppServiceExists = podStatuses['uiAppServiceExists']
-                        def e2eTestJobExists = podStatuses['e2eTestJobExists']
-                        def podStatusesJson = podStatuses['podStatuses']
+    //                 while (currentIteration < maxIterations && breakLoop==false) {
+    //                     echo "Checking pod existence and statuses..."
+    //                     def podStatuses = checkExistence()
+    //                     def expressAppExists = podStatuses['expressAppExists']
+    //                     def uiAppExists = podStatuses['uiAppExists']
+    //                     def expressAppServiceExists = podStatuses['expressAppServiceExists']
+    //                     def uiAppServiceExists = podStatuses['uiAppServiceExists']
+    //                     def e2eTestJobExists = podStatuses['e2eTestJobExists']
+    //                     def podStatusesJson = podStatuses['podStatuses']
 
-                        // echo "${podStatuses}"
-
-
+    //                     // echo "${podStatuses}"
 
 
 
-                        // Check if any pods are found
-                        if (expressAppExists || uiAppExists || expressAppServiceExists || uiAppServiceExists || e2eTestJobExists || podStatusesJson.contains("Terminating")) {
 
-                            // Delete pods only if it's the first time they are found
-                            if (!firstRunCompleted) {
-                                echo "Deleting pods..."
-                                if (expressAppExists) {
-                                    sh "kubectl delete -n filetracker deployment express-app"
+
+    //                     // Check if any pods are found
+    //                     if (expressAppExists || uiAppExists || expressAppServiceExists || uiAppServiceExists || e2eTestJobExists || podStatusesJson.contains("Terminating")) {
+
+    //                         // Delete pods only if it's the first time they are found
+    //                         if (!firstRunCompleted) {
+    //                             echo "Deleting pods..."
+    //                             if (expressAppExists) {
+    //                                 sh "kubectl delete -n filetracker deployment express-app"
                                     
-                                }
-                                if (uiAppExists) {
-                                    sh "kubectl delete -n filetracker deployment ui-app"
-                                }
-                                if (expressAppServiceExists) {
-                                    sh "kubectl delete -n filetracker service express-app-service"
-                                }
-                                if (uiAppServiceExists) {
-                                    sh "kubectl delete -n filetracker service ui-app-service"
-                                }
-                                if (e2eTestJobExists) {
-                                    sh "kubectl delete -n filetracker job e2e-test-app-job"
-                                }
+    //                             }
+    //                             if (uiAppExists) {
+    //                                 sh "kubectl delete -n filetracker deployment ui-app"
+    //                             }
+    //                             if (expressAppServiceExists) {
+    //                                 sh "kubectl delete -n filetracker service express-app-service"
+    //                             }
+    //                             if (uiAppServiceExists) {
+    //                                 sh "kubectl delete -n filetracker service ui-app-service"
+    //                             }
+    //                             if (e2eTestJobExists) {
+    //                                 sh "kubectl delete -n filetracker job e2e-test-app-job"
+    //                             }
 
-                                firstRunCompleted = true
-                                podsFound = true
-                            } else {
-                                echo "Not all pods have finished terminating. Waiting 15 secs for pods to terminate..."
-                                sleep 15 // Wait for 15 seconds before checking again
-                            }
-                        } else {
-                            echo "found none running so exiting loop"
-                            breakLoop = true
-                        }
+    //                             firstRunCompleted = true
+    //                             podsFound = true
+    //                         } else {
+    //                             echo "Not all pods have finished terminating. Waiting 15 secs for pods to terminate..."
+    //                             sleep 15 // Wait for 15 seconds before checking again
+    //                         }
+    //                     } else {
+    //                         echo "found none running so exiting loop"
+    //                         breakLoop = true
+    //                     }
 
-                        currentIteration++
-                    }
+    //                     currentIteration++
+    //                 }
 
-                    if (!podsFound) {
-                        echo "No pods found or terminated."
-                    }
+    //                 if (!podsFound) {
+    //                     echo "No pods found or terminated."
+    //                 }
                     
-                }
-            }
-        }
+    //             }
+    //         }
+    //     }
 
-        stage('Start API Pods') {
-            steps {
-                script {
+    //     stage('Start API Pods') {
+    //         steps {
+    //             script {
                      
                         
-                        sh 'kubectl apply -f express-api/kubernetes'
+    //                     sh 'kubectl apply -f express-api/kubernetes'
 
                     
-                }
-            }
-        }
+    //             }
+    //         }
+    //     }
 
         
         stage('Run UI') {
