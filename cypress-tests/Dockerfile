@@ -13,4 +13,4 @@ COPY . .
 RUN chmod +x /app/Entrypoint.sh
 
 # Set the entry point
-ENTRYPOINT ["/app/Entrypoint.sh"]
+CMD ["/app/Entrypoint.sh"]
