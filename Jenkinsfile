@@ -18,19 +18,19 @@ pipeline {
 
     stages {
 
-           stage('Start API Pods') {
-            steps {
-                script {
+        //    stage('Start API Pods') {
+        //     steps {
+        //         script {
                      
-                        sh "kubectl get all -n filetracker"
-                        sh "kubectl exec -it -n filetracker ui-app-587bb4fb66-hk6xm -- ls -la /shared/cypress/reports/html"
-                        // kubectl exec -it -n filetracker e2e-test-app-job-xgwmp -- /bin/sh
+        //                 sh "kubectl get all -n filetracker"
+        //                 sh "kubectl exec -it -n filetracker ui-app-587bb4fb66-hk6xm -- ls -la /shared/cypress/reports/html"
+        //                 // kubectl exec -it -n filetracker e2e-test-app-job-xgwmp -- /bin/sh
                         
 
                     
-                }
-            }
-        }
+        //         }
+        //     }
+        // }
          
 
        stage('Kill pods that are running') {
