@@ -115,6 +115,7 @@ pipeline {
                     def attempts = 0
 
                     sh "kubectl get all -n filetracker"
+                    sh "kubectl logs express-api -n filetracker"
 
 
                     // retry(retries) {
