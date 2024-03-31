@@ -139,6 +139,8 @@ pipeline {
                                 sleep delaySeconds
                                 echo "API not up. Retry ${attempt}"
                             }
+
+                            sh 'kubectl get deployments -n filetracker'
                         
                     }
                 }
