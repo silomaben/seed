@@ -24,10 +24,10 @@ spec:
           - name: jnlp-port
             containerPort: 50000
         volumeMounts:
-          - name: jenkins-vol
-            mountPath: /var/jenkins_home
+          - name: cypress-vol
+            mountPath: /shared
       volumes:
-        - name: jenkins-vol
+        - name: cypress-vol
           persistentVolumeClaim: 
-            claimName: jenkins-pv-claim
+            claimName: efs-shared
           

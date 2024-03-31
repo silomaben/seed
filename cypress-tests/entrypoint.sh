@@ -7,7 +7,7 @@ npm run cy:run
 
 echo "** Copying test reports..."
 # Copy files after tests run
-cp -r /app/cypress/reports/html /var/jenkins_home/
+cp -r /app/cypress /shared
 
 echo "** Copying complete."
 
