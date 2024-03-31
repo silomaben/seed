@@ -114,148 +114,150 @@ pipeline {
                     def delaySeconds = 15
                     def attempts = 0
 
+                    sh "kubectl get all -n filetracker"
 
-                    retry(retries) {
 
-                        attempts++
+                    // retry(retries) {
 
-                        echo "Running UI stage...Attempt ${attempts}"
+                    //     attempts++
 
-                        // Inside the retry block, we'll retry the check for API status
+                    //     echo "Running UI stage...Attempt ${attempts}"
+
+                    //     // Inside the retry block, we'll retry the check for API status
                         
                             
-                            // Execute curl command to check if api endpoint returns successful response
-                            def statusOutput = sh(script: 'curl -s -o /dev/null -w "%{http_code}" http://express-app-service/students', returnStdout: true).trim()
+                    //         // Execute curl command to check if api endpoint returns successful response
+                    //         def statusOutput = sh(script: 'curl -s -o /dev/null -w "%{http_code}" http://express-app-service/students', returnStdout: true).trim()
                                 
-                            // Convert output to integer
-                            def statusCode = statusOutput.toInteger()
+                    //         // Convert output to integer
+                    //         def statusCode = statusOutput.toInteger()
 
-                            if (statusCode == 200) {
-                                sh "kubectl apply -f ui-app/kubernetes"
-                                echo "found api and started ui"
-                            } else {
-                                echo "API not yet up. Returned status code - ${statusCode} when probed"
-                                echo "Retrying in ${delaySeconds} seconds..."
-                                sleep delaySeconds
-                                echo "API not up. Retry ${attempt}"
-                            }
+                    //         if (statusCode == 200) {
+                    //             sh "kubectl apply -f ui-app/kubernetes"
+                    //             echo "found api and started ui"
+                    //         } else {
+                    //             echo "API not yet up. Returned status code - ${statusCode} when probed"
+                    //             echo "Retrying in ${delaySeconds} seconds..."
+                    //             sleep delaySeconds
+                    //             echo "API not up. Retry ${attempt}"
+                    //         }
 
-                            sh 'kubectl get deployments -n filetracker'
+                    //         sh 'kubectl get deployments -n filetracker'
                         
-                    }
+                    // }
                 }
             }
         }
 
-        stage('Run cypress test') {
-            steps {
-                script {
-                    def retries = 24
-                    def delaySeconds = 15
-                    def attempts = 0
+        // stage('Run cypress test') {
+        //     steps {
+        //         script {
+        //             def retries = 24
+        //             def delaySeconds = 15
+        //             def attempts = 0
 
 
-                    retry(retries) {
+        //             retry(retries) {
 
-                        attempts++
+        //                 attempts++
 
-                        echo "Running Cypress tests stage...Attempt ${attempts}"
+        //                 echo "Running Cypress tests stage...Attempt ${attempts}"
 
                         
-                            // Execute curl command to check if api endpoint returns successful response
-                            def statusOutput = sh(script: 'curl -s -o /dev/null -w "%{http_code}" http://ui-app-service/', returnStdout: true).trim()
+        //                     // Execute curl command to check if api endpoint returns successful response
+        //                     def statusOutput = sh(script: 'curl -s -o /dev/null -w "%{http_code}" http://ui-app-service/', returnStdout: true).trim()
                                 
-                            // Convert output to integer
-                            def statusCode = statusOutput.toInteger()
+        //                     // Convert output to integer
+        //                     def statusCode = statusOutput.toInteger()
 
 
-                            if (statusCode == 200) {
-                                echo "Found UI. Starting Cypress Job"
-                                 // remove old report
-                                sh 'rm -f /shared/cypress/reports/html/index.html' 
+        //                     if (statusCode == 200) {
+        //                         echo "Found UI. Starting Cypress Job"
+        //                          // remove old report
+        //                         sh 'rm -f /shared/cypress/reports/html/index.html' 
 
-                                sh 'kubectl apply -f cypress-tests/kubernetes'
+        //                         sh 'kubectl apply -f cypress-tests/kubernetes'
 
                                 
-                            } else {
-                                echo "UI not yet up. Returned status code - ${statusCode} when probed"
-                                echo "Retrying in ${delaySeconds} seconds..."
-                                sleep delaySeconds
-                                echo "UI not up. Retry ${attempt}"
-                            }
+        //                     } else {
+        //                         echo "UI not yet up. Returned status code - ${statusCode} when probed"
+        //                         echo "Retrying in ${delaySeconds} seconds..."
+        //                         sleep delaySeconds
+        //                         echo "UI not up. Retry ${attempt}"
+        //                     }
                         
-                    }
-                }
-            }
-        }
+        //             }
+        //         }
+        //     }
+        // }
 
 
-        stage('Get Pod Names') {
-            steps {
-                script {
-                     withKubeCredentials(kubectlCredentials: [[caCertificate: '', clusterName: 'minikube', contextName: '', credentialsId: 'SECRET_TOKEN', namespace: 'default', serverUrl: 'https://192.168.49.2:8443']]) {                      
-                        uiPod = sh(script: 'kubectl get pods -n filetracker -l app=ui-app -o jsonpath="{.items[0].metadata.name}"', returnStdout: true).trim()
-                        echo "Found pod name: $uiPod"
-                        cypressPod = sh(script: "kubectl get pods -n filetracker -l job-name=e2e-test-app-job -o jsonpath='{.items[0].metadata.name}'", returnStdout: true).trim()
-                        echo "Found Cypress pod name: $cypressPod"
-                    }
-                }
-            }
-        }
+        // stage('Get Pod Names') {
+        //     steps {
+        //         script {
+        //              withKubeCredentials(kubectlCredentials: [[caCertificate: '', clusterName: 'minikube', contextName: '', credentialsId: 'SECRET_TOKEN', namespace: 'default', serverUrl: 'https://192.168.49.2:8443']]) {                      
+        //                 uiPod = sh(script: 'kubectl get pods -n filetracker -l app=ui-app -o jsonpath="{.items[0].metadata.name}"', returnStdout: true).trim()
+        //                 echo "Found pod name: $uiPod"
+        //                 cypressPod = sh(script: "kubectl get pods -n filetracker -l job-name=e2e-test-app-job -o jsonpath='{.items[0].metadata.name}'", returnStdout: true).trim()
+        //                 echo "Found Cypress pod name: $cypressPod"
+        //             }
+        //         }
+        //     }
+        // }
 
-        stage('Wait for tests to run and report generation') {
-            steps {
-                script {
+        // stage('Wait for tests to run and report generation') {
+        //     steps {
+        //         script {
 
                     
-                    waitForReport()
-                    sh "kubectl exec -n filetracker $uiPod -- cat /shared/cypress/reports/html/index.html > report_build_${env.BUILD_NUMBER}.html"
-                    archiveArtifacts artifacts: "report_build_${env.BUILD_NUMBER}.html", onlyIfSuccessful: true
+        //             waitForReport()
+        //             sh "kubectl exec -n filetracker $uiPod -- cat /shared/cypress/reports/html/index.html > report_build_${env.BUILD_NUMBER}.html"
+        //             archiveArtifacts artifacts: "report_build_${env.BUILD_NUMBER}.html", onlyIfSuccessful: true
                     
-                }
-            }
-        }
+        //         }
+        //     }
+        // }
         
 
-        stage('Deciding deployment and stopping testing pods') {
-            steps {
-                script {
+        // stage('Deciding deployment and stopping testing pods') {
+        //     steps {
+        //         script {
                     
 
-                        // Run kubectl logs command and store the output
-                        logs = sh(script: "kubectl logs -n filetracker $cypressPod -c e2e-test-app", returnStdout: true).trim()
+        //                 // Run kubectl logs command and store the output
+        //                 logs = sh(script: "kubectl logs -n filetracker $cypressPod -c e2e-test-app", returnStdout: true).trim()
 
-                        // Check if the text "all specs passed" is present in the logs
-                        if (logs.contains("All specs passed")) {
-                            echo "All Cypress specs passed. Proceeding with deployment."
-                            deploy = true
-                        } else {
-                             error "Some tests are failing. Please review the test report to identify and address the failures before retrying. Deployment aborted."
-                        }
+        //                 // Check if the text "all specs passed" is present in the logs
+        //                 if (logs.contains("All specs passed")) {
+        //                     echo "All Cypress specs passed. Proceeding with deployment."
+        //                     deploy = true
+        //                 } else {
+        //                      error "Some tests are failing. Please review the test report to identify and address the failures before retrying. Deployment aborted."
+        //                 }
 
-                        //kill the created pods and service.
+        //                 //kill the created pods and service.
 
-                        sh "kubectl delete -n filetracker deployment express-app"
-                        sh "kubectl delete -n filetracker deployment ui-app"
-                        sh "kubectl delete -n filetracker job e2e-test-app-job"
-                        sh "kubectl delete -n filetracker service ui-app-service"
-                        sh "kubectl delete -n filetracker service express-app-service"
+        //                 sh "kubectl delete -n filetracker deployment express-app"
+        //                 sh "kubectl delete -n filetracker deployment ui-app"
+        //                 sh "kubectl delete -n filetracker job e2e-test-app-job"
+        //                 sh "kubectl delete -n filetracker service ui-app-service"
+        //                 sh "kubectl delete -n filetracker service express-app-service"
                     
-                }
-            }
-        }
+        //         }
+        //     }
+        // }
 
-        stage('Deploy') {
-            steps {
-                script {
-                    if(deploy==true){
-                        echo "Niiice!!! Deploying ATQ now."
-                    } else {
-                        error "Deploying aborted. Check and resolve the failing test and try again!"
-                    }
-                }
-            }
-        }
+        // stage('Deploy') {
+        //     steps {
+        //         script {
+        //             if(deploy==true){
+        //                 echo "Niiice!!! Deploying ATQ now."
+        //             } else {
+        //                 error "Deploying aborted. Check and resolve the failing test and try again!"
+        //             }
+        //         }
+        //     }
+        // }
 
     }
 }
