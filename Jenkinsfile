@@ -118,34 +118,34 @@ pipeline {
                     sh "kubectl logs express-app-58464b4785-pr2g5 -n filetracker"
 
 
-                    // retry(retries) {
+                    retry(retries) {
 
-                    //     attempts++
+                        attempts++
 
-                    //     echo "Running UI stage...Attempt ${attempts}"
+                        echo "Running UI stage...Attempt ${attempts}"
 
-                    //     // Inside the retry block, we'll retry the check for API status
+                        // Inside the retry block, we'll retry the check for API status
                         
                             
-                    //         // Execute curl command to check if api endpoint returns successful response
-                    //         def statusOutput = sh(script: 'curl -s -o /dev/null -w "%{http_code}" http://express-app-service/students', returnStdout: true).trim()
+                            // Execute curl command to check if api endpoint returns successful response
+                            def statusOutput = sh(script: 'curl -s -o /dev/null -w "%{http_code}" http://express-app-service.filetracker/students', returnStdout: true).trim()
                                 
-                    //         // Convert output to integer
-                    //         def statusCode = statusOutput.toInteger()
+                            // Convert output to integer
+                            def statusCode = statusOutput.toInteger()
 
-                    //         if (statusCode == 200) {
-                    //             sh "kubectl apply -f ui-app/kubernetes"
-                    //             echo "found api and started ui"
-                    //         } else {
-                    //             echo "API not yet up. Returned status code - ${statusCode} when probed"
-                    //             echo "Retrying in ${delaySeconds} seconds..."
-                    //             sleep delaySeconds
-                    //             echo "API not up. Retry ${attempt}"
-                    //         }
+                            if (statusCode == 200) {
+                                sh "kubectl apply -f ui-app/kubernetes"
+                                echo "found api and started ui"
+                            } else {
+                                echo "API not yet up. Returned status code - ${statusCode} when probed"
+                                echo "Retrying in ${delaySeconds} seconds..."
+                                sleep delaySeconds
+                                echo "API not up. Retry ${attempt}"
+                            }
 
-                    //         sh 'kubectl get deployments -n filetracker'
+                            sh 'kubectl get deployments -n filetracker'
                         
-                    // }
+                    }
                 }
             }
         }
