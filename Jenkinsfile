@@ -23,8 +23,8 @@ pipeline {
                 script {
                      
                         sh "kubectl get all -n filetracker"
-                        sh "kubectl exec -it -n filetracker ui-app-587bb4fb66-hk6xm -- ls -la /shared/cypress"
-                        sh "kubectl exec -it -n filetracker ui-app-587bb4fb66-hk6xm -- ls -la /shared/cypress/reports/"
+                        sh "kubectl exec -it -n filetracker ui-app-587bb4fb66-kxw65 -- ls -la /shared/cypress"
+                        sh "kubectl exec -it -n filetracker ui-app-587bb4fb66-kxw65 -- ls -la /shared/cypress/reports/"
                         // kubectl exec -it -n filetracker e2e-test-app-job-xgwmp -- /bin/sh
                         
 
