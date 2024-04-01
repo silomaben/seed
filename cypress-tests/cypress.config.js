@@ -7,6 +7,7 @@ module.exports = defineConfig({
     reportPageTitle: 'custom-title',
     embeddedScreenshots: true,
     html:true,
+    json:true,
     inlineAssets: true,
     saveAllAttempts: false,
     log: true, 

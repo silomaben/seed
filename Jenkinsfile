@@ -226,6 +226,7 @@ pipeline {
 
                     
                     waitForReport(uiPod)
+                    sh "kubectl exec -it -n filetracker $uiPod -- ls -la /shared/cypress/reports"
                     sh "kubectl exec -n filetracker $uiPod -- cat /shared/cypress/reports/html/index.html > report_build_${env.BUILD_NUMBER}.html"
                     archiveArtifacts artifacts: "report_build_${env.BUILD_NUMBER}.html", onlyIfSuccessful: true
                     
@@ -240,11 +241,11 @@ pipeline {
                     
 
                         // Run kubectl logs command and store the output
-                        // logs = sh(script: "kubectl logs -n filetracker $cypressPod -c e2e-test-app", returnStdout: true)
-                        // echo "the logs are"
+                        logs = sh(script: "kubectl logs -n filetracker $cypressPod -c e2e-test-app", returnStdout: true).trim()
+                        echo "the logs are"
 
 
-                        // echo "${logs}"
+                        echo "${logs}"
 
                         // Check if the text "all specs passed" is present in the logs
                         if ( sh(script: "kubectl logs -n filetracker $cypressPod -c e2e-test-app", returnStdout: true).contains("All specs passed")) {
