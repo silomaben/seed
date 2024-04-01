@@ -25,6 +25,8 @@ pipeline {
                         sh "kubectl get all -n filetracker"
                         sh "kubectl exec -it -n filetracker ui-app-587bb4fb66-kxw65 -- ls -la /shared/cypress"
                         sh "kubectl exec -it -n filetracker ui-app-587bb4fb66-kxw65 -- ls -la /shared/cypress/reports/"
+                        sh "kubectl exec -it -n filetracker ui-app-587bb4fb66-kxw65 -- ls -la /shared/cypress/reports/html"
+                        sh "kubectl exec -it -n filetracker ui-app-587bb4fb66-kxw65 -- ls -la /shared/cypress/reports/html/.jsons"
                         // kubectl exec -it -n filetracker e2e-test-app-job-xgwmp -- /bin/sh
                         
 
@@ -229,6 +231,8 @@ pipeline {
 //                     waitForReport(uiPod)
 //                     sh "kubectl exec -it -n filetracker $uiPod -- ls -la /shared/cypress/reports"
 //                     sh "kubectl exec -n filetracker $uiPod -- cat /shared/cypress/reports/html/index.html > report_build_${env.BUILD_NUMBER}.html"
+//                     sh "kubectl exec -n filetracker $uiPod -- cat /shared/cypress/reports/html/index.html > report_build_${env.BUILD_NUMBER}.html"
+//                     sh "kubectl exec -n filetracker $uiPod -- cat /shared/cypress/reports/html/.jsons/mochawesome.json > report_build_${env.BUILD_NUMBER}.html"
 //                     archiveArtifacts artifacts: "report_build_${env.BUILD_NUMBER}.html", onlyIfSuccessful: true
                     
 //                 }
