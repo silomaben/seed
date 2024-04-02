@@ -1,4 +1,5 @@
 const { defineConfig } = require("cypress");
+const { GenerateCtrfReport } = require('cypress-ctrf-json-report')
 
 module.exports = defineConfig({
   reporter: 'cypress-mochawesome-reporter',
@@ -16,6 +17,9 @@ module.exports = defineConfig({
   e2e: {
     baseUrl: "http://ui-app-service.filetracker.svc.cluster.local",
     setupNodeEvents(on, config) {
+      GenerateCtrfReport({
+        on,
+      }),
       require('cypress-mochawesome-reporter/plugin')(on);
     },
   },
