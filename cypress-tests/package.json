@@ -5,14 +5,13 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "cy:run": "cypress run --spec 'cypress/e2e/*'"
+    "cy:run": "npx cypress run"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
     "cypress": "^13.6.6",
-    "cypress-ctrf-json-reporter": "^0.0.5",
     "cypress-mochawesome-reporter": "^3.8.2"
   }
 }
