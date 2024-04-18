@@ -23,7 +23,7 @@ pipeline {
                 script {
                     // sh " kubectl get pv efs-pv-cypress -o yaml"
                     // sh "kubectl get pvc cypress-pvc -n cypress -o yaml"
-                    sh 'kubectl exec -n cypress ui-app-5db6bdbfcd-wgdqf -- /bin/bash -c "ls -la"'
+                    sh 'kubectl exec -n cypress ui-app-5db6bdbfcd-wgdqf -- ls -la'
 
                 }
             }
