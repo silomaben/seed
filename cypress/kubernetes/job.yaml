@@ -16,7 +16,7 @@ spec:
           imagePullPolicy: Always
           volumeMounts:
             - name: cypress-vol
-              mountPath: /shared/test-cypress
+              mountPath: /shared/cypress/reports
       restartPolicy: Never
       volumes:
         - name: cypress-vol
