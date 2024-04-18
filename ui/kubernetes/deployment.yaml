@@ -18,7 +18,7 @@ spec:
     spec:
       containers:
         - name: ui-app
-          image: cerebriai/atq-ui-test:release-1.0.8
+          image: cerebriai/atq-ui-test:release-1.0.10
           ports:
             - containerPort: 80
           imagePullPolicy: Always
