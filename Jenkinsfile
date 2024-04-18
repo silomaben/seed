@@ -25,6 +25,7 @@ pipeline {
 
                    
 sh"kubectl get all -n cypress"
+sh"kubectl delete -n cypress pvc cypress-pvc"
                     // Initialize variables to track pod and pipeline status
                     def firstRunCompleted = false
                     def breakLoop = false
