@@ -26,7 +26,6 @@ spec:
 
 ---
 
-
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
