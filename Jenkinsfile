@@ -133,7 +133,7 @@ pipeline {
                         echo "Finding API pod... Attempt ${attempts}"
 
                         // Execute curl command to check if api endpoint returns successful response ... Health Check
-                        def statusOutput = sh(script: 'curl -s -o /dev/null -w "%{http_code}" http://express-app-service.cypress/students', returnStdout: true).trim()
+                        def statusOutput = sh(script: 'curl -s -o /dev/null -w "%{http_code}" http://localhost:3000/v3', returnStdout: true).trim()
                             
                         // Convert output to integer
                         def statusCode = statusOutput.toInteger()
@@ -181,7 +181,7 @@ pipeline {
                         
                         
                         // Execute curl command to check if api endpoint returns successful response
-                        def statusOutput = sh(script: 'curl -s -o /dev/null -w "%{http_code}" http://ui-app-service.cypress/', returnStdout: true).trim()
+                        def statusOutput = sh(script: 'curl -s -o /dev/null -w "%{http_code}" http://localhost:4200', returnStdout: true).trim()
 
                             
                         // Convert output to integer
