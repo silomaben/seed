@@ -24,7 +24,7 @@ pipeline {
                 script {
 
                    
-
+sh"kubectl get all -n cypress"
                     // Initialize variables to track pod and pipeline status
                     def firstRunCompleted = false
                     def breakLoop = false
@@ -164,11 +164,11 @@ pipeline {
 
                         echo "Finding UI pod...Attempt ${attempts}"
                         
+                        sh"kubectl get all -n cypress"
                         
                         // Execute curl command to check if api endpoint returns successful response
                         def statusOutput = sh(script: 'curl -s -o /dev/null -w "%{http_code}" http://ui-app-service.cypress/', returnStdout: true).trim()
 
-                         sh"kubectl get all -n cypress"
                             
                         // Convert output to integer
                         def statusCode = statusOutput.toInteger()
@@ -290,15 +290,15 @@ pipeline {
 
     }
 
-     post {
-        always{
-            sh "kubectl delete -n cypress deployment express-app"
-            sh "kubectl delete -n cypress deployment ui-app"
-            sh "kubectl delete -n cypress job e2e-test-app-job"
-            sh "kubectl delete -n cypress service ui-app-service"
-            sh "kubectl delete -n cypress service express-app-service"     
-        }
-    }
+    //  post {
+    //     always{
+    //         sh "kubectl delete -n cypress deployment express-app"
+    //         sh "kubectl delete -n cypress deployment ui-app"
+    //         sh "kubectl delete -n cypress job e2e-test-app-job"
+    //         sh "kubectl delete -n cypress service ui-app-service"
+    //         sh "kubectl delete -n cypress service express-app-service"     
+    //     }
+    // }
 }
 
 def waitForReport(podName) {
