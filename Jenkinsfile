@@ -96,7 +96,7 @@ pipeline {
             steps {
                 script {
                     echo "Starting API"
-                    sh 'kubectl apply -f express-api/kubernetes'
+                    sh 'kubectl apply -f api/kubernetes'
                 }
             }
         }
@@ -123,7 +123,7 @@ pipeline {
 
                         if (statusCode == 200) {
                             echo "Found API pod. Now starting UI pod"
-                            sh "kubectl apply -f ui-app/kubernetes"
+                            sh "kubectl apply -f ui/kubernetes"
                         } else {
                             echo "API pod not yet found/up. Returned status code - ${statusCode} when probed"
                             echo "Retrying in ${delaySeconds} seconds..."
