@@ -12,9 +12,12 @@ export default defineConfig({
     quest: true
   },
   e2e: {
-    'baseUrl': 'http://localhost:4200',
+    'baseUrl': 'http://ui-app-service.filetracker',
     setupNodeEvents(on, config) {
       require('cypress-mochawesome-reporter/plugin')(on);
     },
   },
 });
+
+
+// had issues accessing dashboards so i went back to actualizing our cypress cicd POC

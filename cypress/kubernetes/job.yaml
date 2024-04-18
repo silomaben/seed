@@ -10,13 +10,13 @@ spec:
     spec:
       containers:
         - name: e2e-test-app
-          image: silomaben/cypresse2e-tests
+          image: silomaben/cypress-atq  
           ports:
             - containerPort: 80
           imagePullPolicy: Always
           volumeMounts:
             - name: cypress-vol
-              mountPath: /shared/cypress/reports
+              mountPath: /shared/test-cypress
       restartPolicy: Never
       volumes:
         - name: cypress-vol
