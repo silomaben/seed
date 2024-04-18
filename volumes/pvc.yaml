@@ -9,6 +9,6 @@ spec:
   resources:
     requests:
       storage: 200Mi
-  storageClassName: efs-sc
+  storageClassName: cypress-sc
   volumeMode: Filesystem
-  volumeName: efs-pv-filetracker
+  volumeName: efs-pv-cypress

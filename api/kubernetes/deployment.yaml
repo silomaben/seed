@@ -24,37 +24,3 @@ spec:
           imagePullPolicy: Always
       restartPolicy: Always
 
----
-
-apiVersion: v1
-kind: PersistentVolume
-metadata:
-  name: efs-pv-cypress
-spec:
-  accessModes:
-    - ReadWriteMany
-  capacity:
-    storage: 200Mi
-  csi:
-    driver: efs.csi.aws.com
-    volumeHandle: fs-07710dd1791db2311
-  persistentVolumeReclaimPolicy: Retain
-  storageClassName: cypress-sc
-
----
-
-apiVersion: v1
-kind: PersistentVolumeClaim
-metadata:
-  name: cypress-pvc
-  namespace: cypress
-spec:
-  accessModes:
-    - ReadWriteMany
-  resources:
-    requests:
-      storage: 200Mi
-  storageClassName: cypress-sc
-  volumeMode: Filesystem
-  volumeName: efs-pv-cypress
-

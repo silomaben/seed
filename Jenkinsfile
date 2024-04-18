@@ -24,8 +24,7 @@ pipeline {
                 script {
 
                    
-sh"kubectl get all -n cypress"
-sh"kubectl delete -n cypress pvc cypress-pvc"
+
                     // Initialize variables to track pod and pipeline status
                     def firstRunCompleted = false
                     def breakLoop = false
@@ -165,10 +164,6 @@ sh"kubectl delete -n cypress pvc cypress-pvc"
 
                         echo "Finding UI pod...Attempt ${attempts}"
                         
-                        sh"kubectl get all -n cypress"
-                        // sh"kubectl logs -n cypress $uiPod -c ui-app"
-                        sh"kubectl describe pod/$uiPod -n cypress"
-                        
                         
                         // Execute curl command to check if api endpoint returns successful response
                         def statusOutput = sh(script: 'curl -s -o /dev/null -w "%{http_code}" http://ui-app-service.cypress/', returnStdout: true).trim()
@@ -192,7 +187,7 @@ sh"kubectl delete -n cypress pvc cypress-pvc"
 
                             // run cypress job 
                             sh 'kubectl get all -n cypress'
-                            sh 'kubectl apply -f cypress-tests/kubernetes'
+                            sh 'kubectl apply -f cypress/kubernetes'
 
 
                             
