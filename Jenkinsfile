@@ -165,7 +165,9 @@ sh"kubectl get all -n cypress"
                         echo "Finding UI pod...Attempt ${attempts}"
                         
                         sh"kubectl get all -n cypress"
-                        sh"kubectl logs -n cypress $uiPod -c ui-app"
+                        // sh"kubectl logs -n cypress $uiPod -c ui-app"
+                        sh"kubectl describe pod/$uiPod -n cypress"
+                        
                         
                         // Execute curl command to check if api endpoint returns successful response
                         def statusOutput = sh(script: 'curl -s -o /dev/null -w "%{http_code}" http://ui-app-service.cypress/', returnStdout: true).trim()
