@@ -1,17 +1,18 @@
-const { defineConfig } = require("cypress");
+import { defineConfig } from "cypress";
 
-module.exports = defineConfig({
+export default defineConfig({
   reporter: 'cypress-mochawesome-reporter',
   reporterOptions: {
     charts: true,
+    reportPageTitle: 'custom-title',
     embeddedScreenshots: true,
-    html:true,
-    json:true,
     inlineAssets: true,
-    saveAllAttempts: false
+    saveAllAttempts: false,
+    log: true, 
+    quest: true
   },
   e2e: {
-    baseUrl: "http://ui-app-service.filetracker",
+    'baseUrl': 'http://localhost:4200',
     setupNodeEvents(on, config) {
       require('cypress-mochawesome-reporter/plugin')(on);
     },

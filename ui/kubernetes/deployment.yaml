@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: ui-app
-  namespace: filetracker 
+  namespace: cypress 
   labels:
     app: ui-app
 spec:
@@ -18,7 +18,7 @@ spec:
     spec:
       containers:
         - name: ui-app
-          image: silomaben/ui-app
+          image: silomaben/express-api
           ports:
             - containerPort: 80
           imagePullPolicy: Always

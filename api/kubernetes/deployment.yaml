@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: express-app
-  namespace: filetracker
+  namespace: cypress
   labels:
     app: express-app
 spec:
@@ -23,17 +23,3 @@ spec:
             - containerPort: 3000
           imagePullPolicy: Always
       restartPolicy: Always
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: express-app-service
-  namespace: filetracker 
-spec:
-  selector:
-    app: express-app
-  ports:
-    - protocol: TCP
-      port: 80
-      targetPort: 3000
-  type: ClusterIP
