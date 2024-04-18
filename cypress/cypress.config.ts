@@ -4,7 +4,7 @@ export default defineConfig({
   reporter: 'cypress-mochawesome-reporter',
   reporterOptions: {
     charts: true,
-    reportPageTitle: 'custom-title',
+    reportPageTitle: 'AIQ End To End Tests',
     embeddedScreenshots: true,
     inlineAssets: true,
     saveAllAttempts: false,

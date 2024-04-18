@@ -18,7 +18,7 @@ spec:
     spec:
       containers:
         - name: express-app
-          image: silomaben/express-api
+          image: cerebriai/atq-api:release-1.0.8
           ports:
             - containerPort: 3000
           imagePullPolicy: Always
