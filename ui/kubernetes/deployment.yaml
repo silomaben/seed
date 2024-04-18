@@ -18,7 +18,7 @@ spec:
     spec:
       containers:
         - name: ui-app
-          image: silomaben/express-api
+          image: silomaben/ui-dummy
           ports:
             - containerPort: 80
           imagePullPolicy: Always
