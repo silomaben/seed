@@ -23,12 +23,10 @@ pipeline {
                 script {
                     // sh " kubectl get pv efs-pv-cypress -o yaml"
                     // sh "kubectl get pvc cypress-pvc -n cypress -o yaml"
-                    sh 'kubectl exec -n cypress ui-app-bdf6dd845-hs5kd -- pwd'
-                    sh 'kubectl exec -n cypress ui-app-bdf6dd845-hs5kd -- ls -la'
-                    sh 'kubectl describe pod/e2e-test-app-job-ftljx -n cypress'
-                    sh 'kubectl logs -n cypress e2e-test-app-job-ftljx -c e2e-test-app'
-
-
+                    sh 'kubectl exec -n cypress ui-app-bdf6dd845-tw724 -- pwd'
+                    sh 'kubectl exec -n cypress ui-app-bdf6dd845-tw724 -- ls -la'
+                    sh 'kubectl describe pod/e2e-test-app-job-9gspf -n cypress'
+                    sh 'kubectl logs -n cypress e2e-test-app-job-9gspf -c e2e-test-app'
                 }
             }
         }
