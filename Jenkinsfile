@@ -25,7 +25,6 @@ pipeline {
 
                    
 sh"kubectl get all -n cypress"
-sh"kubectl logs -n cypress $uiPod -c e2e-test-app"
                     // Initialize variables to track pod and pipeline status
                     def firstRunCompleted = false
                     def breakLoop = false
