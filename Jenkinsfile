@@ -153,7 +153,7 @@ sh"kubectl get all -n cypress"
         stage('Run Cypress E2E Job') {
             steps {
                 script {
-                    def retries = 24
+                    def retries = 15
                     def delaySeconds = 15
                     def attempts = 0
 
