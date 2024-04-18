@@ -28,5 +28,5 @@ spec:
       volumes:
         - name: cypress-vol
           persistentVolumeClaim: 
-            claimName: efs-shared
+            claimName: cypress-pvc
       restartPolicy: Always

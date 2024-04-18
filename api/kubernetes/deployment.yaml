@@ -24,19 +24,3 @@ spec:
           imagePullPolicy: Always
       restartPolicy: Always
 
----
-
-apiVersion: v1
-kind: PersistentVolumeClaim
-metadata:
-  name: cypress-pvc
-  namespace: cypress
-spec:
-  accessModes:
-    - ReadWriteMany
-  resources:
-    requests:
-      storage: 200Mi
-  storageClassName: efs-sc
-  volumeMode: Filesystem
-  volumeName: efs-pv-filetracker
