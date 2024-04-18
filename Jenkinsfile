@@ -23,6 +23,8 @@ pipeline {
             steps {
                 script {
 
+                    sh"kubectl get all -n cypress"
+
                     // Initialize variables to track pod and pipeline status
                     def firstRunCompleted = false
                     def breakLoop = false
