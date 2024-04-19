@@ -27,7 +27,7 @@ pipeline {
 
 
                      // Execute curl command to check if api endpoint returns successful response ... Health Check
-                        def statusOutput = sh(script: 'curl -s -o /dev/null -w "%{http_code}" http://localhost:3000/v3', returnStdout: true).trim()
+                        def statusOutput = sh(script: 'curl -s -o /dev/null -w "%{http_code}" http://express-app-service.cypress/v3', returnStdout: true).trim()
                             
                         // Convert output to integer
                         def statusCode = statusOutput.toInteger()
@@ -41,7 +41,7 @@ pipeline {
                             sleep delaySeconds
                         }
 
-                        
+
                     // sh 'kubectl exec -n cypress ui-app-bdf6dd845-cgg2f -- pwd'
                     // sh 'kubectl exec -n cypress ui-app-bdf6dd845-cgg2f -- ls -la'
                     // sh 'kubectl describe pod/e2e-test-app-job-5k4zc -n cypress'
