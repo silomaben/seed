@@ -361,57 +361,57 @@ pipeline {
     //         }
     //     }
 
-        stage('Run Cypress E2E Job') {
-            steps {
-                script {
-                    def retries = 15
-                    def delaySeconds = 15
-                    def attempts = 0
+        // stage('Run Cypress E2E Job') {
+        //     steps {
+        //         script {
+        //             def retries = 15
+        //             def delaySeconds = 15
+        //             def attempts = 0
 
 
-                    retry(retries) {
+        //             retry(retries) {
 
-                        attempts++
+        //                 attempts++
 
-                        echo "Finding UI pod...Attempt ${attempts}"
+        //                 echo "Finding UI pod...Attempt ${attempts}"
                         
                         
-                        // Execute curl command to check if api endpoint returns successful response
-                        def statusOutput = sh(script: 'curl -s -o /dev/null -w "%{http_code}" http://ui-app-service.cypress', returnStdout: true).trim()
+        //                 // Execute curl command to check if api endpoint returns successful response
+        //                 def statusOutput = sh(script: 'curl -s -o /dev/null -w "%{http_code}" http://ui-app-service.cypress', returnStdout: true).trim()
 
                             
-                        // Convert output to integer
-                        def statusCode = statusOutput.toInteger()
+        //                 // Convert output to integer
+        //                 def statusCode = statusOutput.toInteger()
 
 
-                        if (statusCode == 200) {
-                            echo "Found UI. Starting Cypress Job"
+        //                 if (statusCode == 200) {
+        //                     echo "Found UI. Starting Cypress Job"
 
-                            // delete old cypress report if it exists
-                            while (fileExists(uiPod,'cypress','/shared/cypress/reports/html/index.html')) {
-                                echo "Found old report. Deleting it now..."
-                                sh "kubectl exec -n cypress $uiPod -- rm /shared/cypress/reports/html/index.html"
-                            }
-
-                            
-                            // sh "kubectl exec -n cypress $uiPod -- rm -r /shared/cypress"
-
-                            // run cypress job 
-                            sh 'kubectl get all -n cypress'
-                            sh 'kubectl apply -f cypress/kubernetes'
-
+        //                     // delete old cypress report if it exists
+        //                     while (fileExists(uiPod,'cypress','/shared/cypress/reports/html/index.html')) {
+        //                         echo "Found old report. Deleting it now..."
+        //                         sh "kubectl exec -n cypress $uiPod -- rm /shared/cypress/reports/html/index.html"
+        //                     }
 
                             
-                        } else {
-                            echo "UI pod not yet found/up. Returned status code - ${statusCode} when probed"
-                            echo "Retrying in ${delaySeconds} seconds..."
-                            sleep delaySeconds
-                        }
+        //                     // sh "kubectl exec -n cypress $uiPod -- rm -r /shared/cypress"
+
+        //                     // run cypress job 
+        //                     sh 'kubectl get all -n cypress'
+        //                     sh 'kubectl apply -f cypress/kubernetes'
+
+
+                            
+        //                 } else {
+        //                     echo "UI pod not yet found/up. Returned status code - ${statusCode} when probed"
+        //                     echo "Retrying in ${delaySeconds} seconds..."
+        //                     sleep delaySeconds
+        //                 }
                         
-                    }
-                }
-            }
-        }
+        //             }
+        //         }
+        //     }
+        // }
 
 
     //     stage('Get Cypress Job Pod Name') {
