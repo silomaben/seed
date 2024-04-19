@@ -40,6 +40,17 @@ pipeline {
             }
         }
 
+        stage('Get UI Pod Name') {
+            steps {
+                script {
+                        
+                        uiPod = sh(script: 'kubectl get pods -n cypress -l app=ui-app -o jsonpath="{.items[0].metadata.name}"', returnStdout: true).trim()
+                        echo "Found UI pod name: $uiPod"
+                    
+                }
+            }
+        }
+
 
         stage('Run Cypress E2E Job') {
             steps {
@@ -68,9 +79,9 @@ pipeline {
                             echo "Found UI. Starting Cypress Job"
 
                             // delete old cypress report if it exists
-                            while (fileExists("ui-app-67fbfff779-dxzf5",'cypress','/shared/cypress/reports/html/index.html')) {
+                            while (fileExists(uiPod,'cypress','/shared/cypress/reports/html/index.html')) {
                                 echo "Found old report. Deleting it now..."
-                                sh "kubectl exec -n cypress ui-app-67fbfff779-dxzf5 -- rm /shared/cypress/reports/html/index.html"
+                                sh "kubectl exec -n cypress $uiPod -- rm /shared/cypress/reports/html/index.html"
                             }
 
                             
