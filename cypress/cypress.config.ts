@@ -12,7 +12,7 @@ export default defineConfig({
     quest: true
   },
   e2e: {
-    'baseUrl': 'http://localhost:4200',
+    'baseUrl': 'http://localhost:80',
     setupNodeEvents(on, config) {
       require('cypress-mochawesome-reporter/plugin')(on);
     },
