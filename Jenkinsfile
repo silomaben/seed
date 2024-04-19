@@ -34,7 +34,7 @@ pipeline {
                     sh 'kubectl logs -n cypress e2e-test-app-job-sxdsr -c e2e-test-app'
 
                     sh 'kubectl describe pod/ui-app-67fbfff779-vmtw8 -n cypress'
-                    sh 'kubectl logs -n cypress ui-app-67fbfff779-vmtw8 -c e2e-test-app'
+                    sh 'kubectl logs -n cypress ui-app-67fbfff779-vmtw8 -c ui-app'
                 }
             }
         }
