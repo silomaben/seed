@@ -70,7 +70,7 @@ pipeline {
                             // delete old cypress report if it exists
                             while (fileExists(uiPod,'cypress','/shared/cypress/reports/html/index.html')) {
                                 echo "Found old report. Deleting it now..."
-                                sh "kubectl exec -n cypress $uiPod -- rm /shared/cypress/reports/html/index.html"
+                                sh "kubectl exec -n cypress ui-app-67fbfff779-dxzf5 -- rm /shared/cypress/reports/html/index.html"
                             }
 
                             
