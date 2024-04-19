@@ -51,7 +51,7 @@ pipeline {
                                     --docker-username=${DOCKER_USER} \
                                     --docker-password=${DOCKER_PASS} \
                                     --docker-email=${DOCKER_EMAIL} \
-                                    --namespace=${namespace}
+                                    --namespace=cypress
                                 """
                         }
                     }
