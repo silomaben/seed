@@ -18,357 +18,29 @@ pipeline {
 
     stages {
 
-        //    stage('Kill pods if running') {
-        //     steps {
-        //         script {
+           stage('Kill pods if running') {
+            steps {
+                script {
 
                                 
-        //                             sh "kubectl delete -n cypress deployment e2e-test-app"
+                    sh "kubectl delete -n cypress job e2e-test-app-job"
 
 
-        //             //                   sh 'kubectl describe pod/e2e-test-app-job-x2d6w -n cypress'
-        //             // sh 'kubectl logs -n cypress e2e-test-app-job-x2d6w -c e2e-test-app'
+                    //                   sh 'kubectl describe pod/e2e-test-app-job-x2d6w -n cypress'
+                    // sh 'kubectl logs -n cypress e2e-test-app-job-x2d6w -c e2e-test-app'
 
-        //             sh 'kubectl describe pod/ui-app-67fbfff779-d6bsl -n cypress'
-        //             sh 'kubectl logs -n cypress ui-app-67fbfff779-d6bsl -c ui-app'
+                    sh 'kubectl describe pod/ui-app-67fbfff779-d6bsl -n cypress'
+                    sh 'kubectl logs -n cypress ui-app-67fbfff779-d6bsl -c ui-app'
                     
-        //             sh 'kubectl describe pod/express-app-5868df5d9f-bxg9n -n cypress'
-        //             sh 'kubectl logs -n cypress express-app-5868df5d9f-bxg9n -c express-app'
+                    sh 'kubectl describe pod/express-app-5868df5d9f-bxg9n -n cypress'
+                    sh 'kubectl logs -n cypress express-app-5868df5d9f-bxg9n -c express-app'
                                 
                     
-        //         }
-        //     }
-        // }
-
-
-        // stage('Run Cypress E2E Job') {
-        //     steps {
-        //         script {
-        //             def retries = 15
-        //             def delaySeconds = 15
-        //             def attempts = 0
-
-
-        //             retry(retries) {
-
-        //                 attempts++
-
-        //                 echo "Finding UI pod...Attempt ${attempts}"
-                        
-                        
-        //                 // Execute curl command to check if api endpoint returns successful response
-        //                 def statusOutput = sh(script: 'curl -s -o /dev/null -w "%{http_code}" http://ui-app-service.cypress', returnStdout: true).trim()
-
-                            
-        //                 // Convert output to integer
-        //                 def statusCode = statusOutput.toInteger()
-
-
-        //                 if (statusCode == 200) {
-        //                     echo "Found UI. Starting Cypress Job"
-
-        //                     // delete old cypress report if it exists
-        //                     while (fileExists(uiPod,'cypress','/shared/cypress/reports/html/index.html')) {
-        //                         echo "Found old report. Deleting it now..."
-        //                         sh "kubectl exec -n cypress $uiPod -- rm /shared/cypress/reports/html/index.html"
-        //                     }
-
-                            
-        //                     // sh "kubectl exec -n cypress $uiPod -- rm -r /shared/cypress"
-
-        //                     // run cypress job 
-        //                     sh 'kubectl get all -n cypress'
-        //                     sh 'kubectl apply -f cypress/kubernetes'
-
-
-                            
-        //                 } else {
-        //                     echo "UI pod not yet found/up. Returned status code - ${statusCode} when probed"
-        //                     echo "Retrying in ${delaySeconds} seconds..."
-        //                     sleep delaySeconds
-        //                 }
-                        
-        //             }
-        //         }
-        //     }
-        // }
-
-
-        // stage('Get Cypress Job Pod Name') {
-        //     steps {
-        //         script {
-        //                 cypressPod = sh(script: "kubectl get pods -n cypress -l job-name=e2e-test-app-job -o jsonpath='{.items[0].metadata.name}'", returnStdout: true).trim()
-        //                 echo "Found Cypress pod name: $cypressPod"
-                    
-        //         }
-        //     }
-        // }
-
-            
-
-        // stage('Wait for tests to run and generate report') {
-        //     steps {
-        //         script {
-
-        //             echo "Awaiting report generation"
-
-        //             waitForReport(uiPod)
-
-        //             sh "kubectl exec -n cypress $uiPod -- cat /shared/cypress/reports/html/index.html > report_build_${env.BUILD_NUMBER}.html"
-        //             archiveArtifacts artifacts: "report_build_${env.BUILD_NUMBER}.html", onlyIfSuccessful: true
-
-        //         }
-        //     }
-        // }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        // stage('check stuff') {
-        //     steps {
-        //         script {
-        //             // sh " kubectl get pv efs-pv-cypress -o yaml"
-        //             sh "kubectl -n cypress get all"
-        //             // sh "kubectl describe pod/express-app-5868df5d9f-htdbk -n cypress"
-
-
-                     
-
-        //             // sh 'kubectl exec -n cypress ui-app-bdf6dd845-cgg2f -- pwd'
-        //             // sh 'kubectl exec -n cypress ui-app-bdf6dd845-cgg2f -- ls -la'
-        //             sh 'kubectl describe pod/e2e-test-app-job-x2d6w -n cypress'
-        //             sh 'kubectl logs -n cypress e2e-test-app-job-x2d6w -c e2e-test-app'
-
-        //             sh 'kubectl describe pod/ui-app-67fbfff779-7z52d -n cypress'
-        //             sh 'kubectl logs -n cypress ui-app-67fbfff779-7z52d -c ui-app'
-                    
-        //             sh 'kubectl describe pod/express-app-5868df5d9f-b8l6b -n cypress'
-        //             sh 'kubectl logs -n cypress express-app-5868df5d9f-b8l6b -c express-app'
-        //         }
-        //     }
-        // }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        
-
-        stage('Docker hub authentication'){
-            steps{
-                script{
-                                // Create Secret to access dockerhub
-                    def docsecretExists = sh(script: "kubectl --namespace=cypress get secret regcred", returnStatus: true) == 0
-                    if (docsecretExists) {
-                        echo "Secret regcred already exists."
-                    } else {
-                        // Create the secret
-                        def DOCKER_EMAIL = 'software@cerebriai.com'
-                        withCredentials([usernamePassword(credentialsId: 'docker-sw',
-                        usernameVariable: 'DOCKER_USER',
-                        passwordVariable: 'DOCKER_PASS')]) {
-                            sh """
-                                kubectl create secret docker-registry regcred \
-                                    --docker-server=https://index.docker.io/v1/ \
-                                    --docker-username=${DOCKER_USER} \
-                                    --docker-password=${DOCKER_PASS} \
-                                    --docker-email=${DOCKER_EMAIL} \
-                                    --namespace=cypress
-                                """
-                        }
-                    }
-                }
-                    
-                
-            }
-        }
-
-
-         
-
-       stage('Kill pods if running') {
-            steps {
-                script {
-
-                   
-
-                    // Initialize variables to track pod and pipeline status
-                    def firstRunCompleted = false
-                    def breakLoop = false
-                    def podsFound = false
-
-                    // Loop until pods are not found or for a specific number of iterations
-                    def maxIterations = 5 
-                    def currentIteration = 0
-                    
-
-                    while (currentIteration < maxIterations && breakLoop==false) {
-                        echo "Checking pod existence and statuses..."
-                        def podStatuses = checkExistence()
-                        def expressAppExists = podStatuses['expressAppExists']
-                        def uiAppExists = podStatuses['uiAppExists']
-                        def expressAppServiceExists = podStatuses['expressAppServiceExists']
-                        def uiAppServiceExists = podStatuses['uiAppServiceExists']
-                        def e2eTestJobExists = podStatuses['e2eTestJobExists']
-                        def podStatusesJson = podStatuses['podStatuses']
-
-
-
-
-
-
-                        // Check if any pods are found
-                        if (expressAppExists || uiAppExists || expressAppServiceExists || uiAppServiceExists || e2eTestJobExists || podStatusesJson.contains("Terminating")) {
-
-                            // Delete pods only if it's the first time they are found
-                            if (!firstRunCompleted) {
-                                echo "Deleting pods..."
-                                if (expressAppExists) {
-                                    sh "kubectl delete -n cypress deployment express-app"
-                                }
-                                if (uiAppExists) {
-                                    sh "kubectl delete -n cypress deployment ui-app"
-                                }
-                                if (expressAppServiceExists) {
-                                    sh "kubectl delete -n cypress service express-app-service"
-                                }
-                                if (uiAppServiceExists) {
-                                    sh "kubectl delete -n cypress service ui-app-service"
-                                }
-                                if (e2eTestJobExists) {
-                                    sh "kubectl delete -n cypress job e2e-test-app-job"
-                                }
-
-                                firstRunCompleted = true
-                                podsFound = true
-                            } else {
-                                echo "Not all pods have finished terminating. Waiting 15 secs for pods to terminate..."
-                                sleep 15 
-                            }
-                        } else {
-                            echo "No running or terminating pods. Proceeding to create testing pods..."
-                            breakLoop = true
-                        }
-
-                        currentIteration++
-                    }
-
-                    if (!podsFound) {
-                        echo "No pods found or terminated."
-                    }
-                    
                 }
             }
         }
 
-        stage('Start API Pod') {
-            steps {
-                script {
-                    echo "Starting API"
-                    sh 'kubectl apply -f api/kubernetes'
-                }
-            }
-        }
 
-        
-        stage('Start UI Pod') {
-            steps {
-                script {
-                    def retries = 24
-                    def delaySeconds = 15
-                    def attempts = 0
-
-                    retry(retries) {
-
-                        attempts++
-
-                        echo "Finding API pod... Attempt ${attempts}"
-
-                        // Execute curl command to check if api endpoint returns successful response ... Health Check
-                        def statusOutput = sh(script: 'curl -s -o /dev/null -w "%{http_code}" http://express-app-service.cypress/v3', returnStdout: true).trim()
-                            
-                        // Convert output to integer
-                        def statusCode = statusOutput.toInteger()
-
-                        if (statusCode == 200) {
-                            echo "Found API pod. Now starting UI pod"
-                            sh "kubectl apply -f ui/kubernetes"
-                        } else {
-                            echo "API pod not yet found/up. Returned status code - ${statusCode} when probed"
-                            echo "Retrying in ${delaySeconds} seconds..."
-                            sleep delaySeconds
-                        }
-
-                        
-                        
-                    }
-                }
-            }
-        }
-
-         stage('Get UI Pod Name') {
-            steps {
-                script {
-                        
-                        uiPod = sh(script: 'kubectl get pods -n cypress -l app=ui-app -o jsonpath="{.items[0].metadata.name}"', returnStdout: true).trim()
-                        echo "Found UI pod name: $uiPod"
-                    
-                }
-            }
-        }
- 
         stage('Run Cypress E2E Job') {
             steps {
                 script {
@@ -449,60 +121,388 @@ pipeline {
             }
         }
 
-        stage('Decide deployment based on test outcomes') {
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        stage('check stuff') {
             steps {
                 script {
+                    // sh " kubectl get pv efs-pv-cypress -o yaml"
+                    sh "kubectl -n cypress get all"
+                    // sh "kubectl describe pod/express-app-5868df5d9f-htdbk -n cypress"
 
-                    def logs
-                    def finished = false
 
+                     
+
+                    // sh 'kubectl exec -n cypress ui-app-bdf6dd845-cgg2f -- pwd'
+                    // sh 'kubectl exec -n cypress ui-app-bdf6dd845-cgg2f -- ls -la'
+                    sh 'kubectl describe pod/e2e-test-app-job-x2d6w -n cypress'
+                    sh 'kubectl logs -n cypress e2e-test-app-job-x2d6w -c e2e-test-app'
+
+                    sh 'kubectl describe pod/ui-app-67fbfff779-7z52d -n cypress'
+                    sh 'kubectl logs -n cypress ui-app-67fbfff779-7z52d -c ui-app'
                     
-                    
-                    // Loop until "Container execution finished" is found in the logs...this is because initially logs were being printed half way
-                    while (!finished) {
+                    sh 'kubectl describe pod/express-app-5868df5d9f-b8l6b -n cypress'
+                    sh 'kubectl logs -n cypress express-app-5868df5d9f-b8l6b -c express-app'
+                }
+            }
+        }
 
-                        // capture logs
-                        logs = sh(script: "kubectl logs -n cypress $cypressPod -c e2e-test-app", returnStdout: true).trim()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+
+    //     stage('Docker hub authentication'){
+    //         steps{
+    //             script{
+    //                             // Create Secret to access dockerhub
+    //                 def docsecretExists = sh(script: "kubectl --namespace=cypress get secret regcred", returnStatus: true) == 0
+    //                 if (docsecretExists) {
+    //                     echo "Secret regcred already exists."
+    //                 } else {
+    //                     // Create the secret
+    //                     def DOCKER_EMAIL = 'software@cerebriai.com'
+    //                     withCredentials([usernamePassword(credentialsId: 'docker-sw',
+    //                     usernameVariable: 'DOCKER_USER',
+    //                     passwordVariable: 'DOCKER_PASS')]) {
+    //                         sh """
+    //                             kubectl create secret docker-registry regcred \
+    //                                 --docker-server=https://index.docker.io/v1/ \
+    //                                 --docker-username=${DOCKER_USER} \
+    //                                 --docker-password=${DOCKER_PASS} \
+    //                                 --docker-email=${DOCKER_EMAIL} \
+    //                                 --namespace=cypress
+    //                             """
+    //                     }
+    //                 }
+    //             }
+                    
+                
+    //         }
+    //     }
+
+
+         
+
+    //    stage('Kill pods if running') {
+    //         steps {
+    //             script {
+
+                   
+
+    //                 // Initialize variables to track pod and pipeline status
+    //                 def firstRunCompleted = false
+    //                 def breakLoop = false
+    //                 def podsFound = false
+
+    //                 // Loop until pods are not found or for a specific number of iterations
+    //                 def maxIterations = 5 
+    //                 def currentIteration = 0
+                    
+
+    //                 while (currentIteration < maxIterations && breakLoop==false) {
+    //                     echo "Checking pod existence and statuses..."
+    //                     def podStatuses = checkExistence()
+    //                     def expressAppExists = podStatuses['expressAppExists']
+    //                     def uiAppExists = podStatuses['uiAppExists']
+    //                     def expressAppServiceExists = podStatuses['expressAppServiceExists']
+    //                     def uiAppServiceExists = podStatuses['uiAppServiceExists']
+    //                     def e2eTestJobExists = podStatuses['e2eTestJobExists']
+    //                     def podStatusesJson = podStatuses['podStatuses']
+
+
+
+
+
+
+    //                     // Check if any pods are found
+    //                     if (expressAppExists || uiAppExists || expressAppServiceExists || uiAppServiceExists || e2eTestJobExists || podStatusesJson.contains("Terminating")) {
+
+    //                         // Delete pods only if it's the first time they are found
+    //                         if (!firstRunCompleted) {
+    //                             echo "Deleting pods..."
+    //                             if (expressAppExists) {
+    //                                 sh "kubectl delete -n cypress deployment express-app"
+    //                             }
+    //                             if (uiAppExists) {
+    //                                 sh "kubectl delete -n cypress deployment ui-app"
+    //                             }
+    //                             if (expressAppServiceExists) {
+    //                                 sh "kubectl delete -n cypress service express-app-service"
+    //                             }
+    //                             if (uiAppServiceExists) {
+    //                                 sh "kubectl delete -n cypress service ui-app-service"
+    //                             }
+    //                             if (e2eTestJobExists) {
+    //                                 sh "kubectl delete -n cypress job e2e-test-app-job"
+    //                             }
+
+    //                             firstRunCompleted = true
+    //                             podsFound = true
+    //                         } else {
+    //                             echo "Not all pods have finished terminating. Waiting 15 secs for pods to terminate..."
+    //                             sleep 15 
+    //                         }
+    //                     } else {
+    //                         echo "No running or terminating pods. Proceeding to create testing pods..."
+    //                         breakLoop = true
+    //                     }
+
+    //                     currentIteration++
+    //                 }
+
+    //                 if (!podsFound) {
+    //                     echo "No pods found or terminated."
+    //                 }
+                    
+    //             }
+    //         }
+    //     }
+
+    //     stage('Start API Pod') {
+    //         steps {
+    //             script {
+    //                 echo "Starting API"
+    //                 sh 'kubectl apply -f api/kubernetes'
+    //             }
+    //         }
+    //     }
+
+        
+    //     stage('Start UI Pod') {
+    //         steps {
+    //             script {
+    //                 def retries = 24
+    //                 def delaySeconds = 15
+    //                 def attempts = 0
+
+    //                 retry(retries) {
+
+    //                     attempts++
+
+    //                     echo "Finding API pod... Attempt ${attempts}"
+
+    //                     // Execute curl command to check if api endpoint returns successful response ... Health Check
+    //                     def statusOutput = sh(script: 'curl -s -o /dev/null -w "%{http_code}" http://express-app-service.cypress/v3', returnStdout: true).trim()
+                            
+    //                     // Convert output to integer
+    //                     def statusCode = statusOutput.toInteger()
+
+    //                     if (statusCode == 200) {
+    //                         echo "Found API pod. Now starting UI pod"
+    //                         sh "kubectl apply -f ui/kubernetes"
+    //                     } else {
+    //                         echo "API pod not yet found/up. Returned status code - ${statusCode} when probed"
+    //                         echo "Retrying in ${delaySeconds} seconds..."
+    //                         sleep delaySeconds
+    //                     }
+
                         
-                        if (logs.contains("Container execution finished")) {
-                            // Print the captured logs
-                            echo "${logs}"
-                            finished = true
-                        } else {                            
-                            sleep 5 
-                        }
-                    }
+                        
+    //                 }
+    //             }
+    //         }
+    //     }
+
+    //      stage('Get UI Pod Name') {
+    //         steps {
+    //             script {
+                        
+    //                     uiPod = sh(script: 'kubectl get pods -n cypress -l app=ui-app -o jsonpath="{.items[0].metadata.name}"', returnStdout: true).trim()
+    //                     echo "Found UI pod name: $uiPod"
+                    
+    //             }
+    //         }
+    //     }
+ 
+    //     stage('Run Cypress E2E Job') {
+    //         steps {
+    //             script {
+    //                 def retries = 15
+    //                 def delaySeconds = 15
+    //                 def attempts = 0
+
+
+    //                 retry(retries) {
+
+    //                     attempts++
+
+    //                     echo "Finding UI pod...Attempt ${attempts}"
+                        
+                        
+    //                     // Execute curl command to check if api endpoint returns successful response
+    //                     def statusOutput = sh(script: 'curl -s -o /dev/null -w "%{http_code}" http://ui-app-service.cypress', returnStdout: true).trim()
+
+                            
+    //                     // Convert output to integer
+    //                     def statusCode = statusOutput.toInteger()
+
+
+    //                     if (statusCode == 200) {
+    //                         echo "Found UI. Starting Cypress Job"
+
+    //                         // delete old cypress report if it exists
+    //                         while (fileExists(uiPod,'cypress','/shared/cypress/reports/html/index.html')) {
+    //                             echo "Found old report. Deleting it now..."
+    //                             sh "kubectl exec -n cypress $uiPod -- rm /shared/cypress/reports/html/index.html"
+    //                         }
+
+                            
+    //                         // sh "kubectl exec -n cypress $uiPod -- rm -r /shared/cypress"
+
+    //                         // run cypress job 
+    //                         sh 'kubectl get all -n cypress'
+    //                         sh 'kubectl apply -f cypress/kubernetes'
+
+
+                            
+    //                     } else {
+    //                         echo "UI pod not yet found/up. Returned status code - ${statusCode} when probed"
+    //                         echo "Retrying in ${delaySeconds} seconds..."
+    //                         sleep delaySeconds
+    //                     }
+                        
+    //                 }
+    //             }
+    //         }
+    //     }
+
+
+    //     stage('Get Cypress Job Pod Name') {
+    //         steps {
+    //             script {
+    //                     cypressPod = sh(script: "kubectl get pods -n cypress -l job-name=e2e-test-app-job -o jsonpath='{.items[0].metadata.name}'", returnStdout: true).trim()
+    //                     echo "Found Cypress pod name: $cypressPod"
+                    
+    //             }
+    //         }
+    //     }
+
+            
+
+    //     stage('Wait for tests to run and generate report') {
+    //         steps {
+    //             script {
+
+    //                 echo "Awaiting report generation"
+
+    //                 waitForReport(uiPod)
+
+    //                 sh "kubectl exec -n cypress $uiPod -- cat /shared/cypress/reports/html/index.html > report_build_${env.BUILD_NUMBER}.html"
+    //                 archiveArtifacts artifacts: "report_build_${env.BUILD_NUMBER}.html", onlyIfSuccessful: true
+
+    //             }
+    //         }
+    //     }
+
+    //     stage('Decide deployment based on test outcomes') {
+    //         steps {
+    //             script {
+
+    //                 def logs
+    //                 def finished = false
+
+                    
+                    
+    //                 // Loop until "Container execution finished" is found in the logs...this is because initially logs were being printed half way
+    //                 while (!finished) {
+
+    //                     // capture logs
+    //                     logs = sh(script: "kubectl logs -n cypress $cypressPod -c e2e-test-app", returnStdout: true).trim()
+                        
+    //                     if (logs.contains("Container execution finished")) {
+    //                         // Print the captured logs
+    //                         echo "${logs}"
+    //                         finished = true
+    //                     } else {                            
+    //                         sleep 5 
+    //                     }
+    //                 }
 
                     
 
-                    if (logs.contains("All specs passed")) {
-                        echo "All tests passed!"
-                        deploy = true
-                    } else {
-                        deploy = false
-                    }
+    //                 if (logs.contains("All specs passed")) {
+    //                     echo "All tests passed!"
+    //                     deploy = true
+    //                 } else {
+    //                     deploy = false
+    //                 }
 
                     
 
-                    if (deploy == false){
-                        error "Some tests failed. Investigate and take necessary actions... Stopping pipeline."
-                    }
+    //                 if (deploy == false){
+    //                     error "Some tests failed. Investigate and take necessary actions... Stopping pipeline."
+    //                 }
 
-                }
-            }
-        }
+    //             }
+    //         }
+    //     }
 
 
 
-        stage('Deploy') {
-            steps {
-                script {                 
-                    if(deploy==true){
-                        echo "Niiice!!! Deploying CerebriAI ATQ now."
-                    } 
-                }
-            }
-        }
+    //     stage('Deploy') {
+    //         steps {
+    //             script {                 
+    //                 if(deploy==true){
+    //                     echo "Niiice!!! Deploying CerebriAI ATQ now."
+    //                 } 
+    //             }
+    //         }
+    //     }
 
         
 
