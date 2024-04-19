@@ -24,6 +24,24 @@ pipeline {
                     // sh " kubectl get pv efs-pv-cypress -o yaml"
                     sh "kubectl -n cypress get all"
                     sh "kubectl describe pod/express-app-5868df5d9f-htdbk -n cypress"
+
+
+                     // Execute curl command to check if api endpoint returns successful response ... Health Check
+                        def statusOutput = sh(script: 'curl -s -o /dev/null -w "%{http_code}" http://localhost:3000/v3', returnStdout: true).trim()
+                            
+                        // Convert output to integer
+                        def statusCode = statusOutput.toInteger()
+
+                        if (statusCode == 200) {
+                            echo "Found API pod. Now starting UI pod"
+                            sh "kubectl apply -f ui/kubernetes"
+                        } else {
+                            echo "API pod not yet found/up. Returned status code - ${statusCode} when probed"
+                            echo "Retrying in ${delaySeconds} seconds..."
+                            sleep delaySeconds
+                        }
+
+                        
                     // sh 'kubectl exec -n cypress ui-app-bdf6dd845-cgg2f -- pwd'
                     // sh 'kubectl exec -n cypress ui-app-bdf6dd845-cgg2f -- ls -la'
                     // sh 'kubectl describe pod/e2e-test-app-job-5k4zc -n cypress'
