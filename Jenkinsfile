@@ -23,7 +23,7 @@ pipeline {
                 script {
 
                                 
-                                    sh "kubectl delete -n cypress deployment express-app"
+                                    sh "kubectl delete -n cypress deployment e2e-test-app"
 
 
                     //                   sh 'kubectl describe pod/e2e-test-app-job-x2d6w -n cypress'
