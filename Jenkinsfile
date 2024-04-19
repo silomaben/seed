@@ -18,204 +18,34 @@ pipeline {
 
     stages {
 
-        //    stage('Kill pods if running') {
+     
+
+        // stage('check stuff') {
         //     steps {
         //         script {
-
-                                
-        //             // sh "kubectl delete -n cypress job e2e-test-app-job"
-
-
-        //             //                   sh 'kubectl describe pod/e2e-test-app-job-x2d6w -n cypress'
-        //             // sh 'kubectl logs -n cypress e2e-test-app-job-x2d6w -c e2e-test-app'
-
-        //             sh 'kubectl describe pod/ui-app-67fbfff779-dxzf5 -n cypress'
-        //             sh 'kubectl logs -n cypress ui-app-67fbfff779-dxzf5 -c ui-app'
-                    
-        //             sh 'kubectl describe pod/express-app-5868df5d9f-92tr8 -n cypress'
-        //             sh 'kubectl logs -n cypress express-app-5868df5d9f-92tr8 -c express-app'
-                                
-                    
-        //         }
-        //     }
-        // }
-
-        // stage('Get UI Pod Name') {
-        //     steps {
-        //         script {
-                        
-        //                 uiPod = sh(script: 'kubectl get pods -n cypress -l app=ui-app -o jsonpath="{.items[0].metadata.name}"', returnStdout: true).trim()
-        //                 echo "Found UI pod name: $uiPod"
-                    
-        //         }
-        //     }
-        // }
-
-
-        // stage('Run Cypress E2E Job') {
-        //     steps {
-        //         script {
-        //             def retries = 15
-        //             def delaySeconds = 15
-        //             def attempts = 0
-
-
-        //             retry(retries) {
-
-        //                 attempts++
-
-        //                 echo "Finding UI pod...Attempt ${attempts}"
-                        
-                        
-        //                 // Execute curl command to check if api endpoint returns successful response
-        //                 def statusOutput = sh(script: 'curl -s -o /dev/null -w "%{http_code}" http://ui-app-service.cypress', returnStdout: true).trim()
-
-                            
-        //                 // Convert output to integer
-        //                 def statusCode = statusOutput.toInteger()
-
-
-        //                 if (statusCode == 200) {
-        //                     echo "Found UI. Starting Cypress Job"
-
-        //                     // delete old cypress report if it exists
-        //                     while (fileExists(uiPod,'cypress','/shared/cypress/reports/html/index.html')) {
-        //                         echo "Found old report. Deleting it now..."
-        //                         sh "kubectl exec -n cypress $uiPod -- rm /shared/cypress/reports/html/index.html"
-        //                     }
-
-                            
-        //                     // sh "kubectl exec -n cypress $uiPod -- rm -r /shared/cypress"
-
-        //                     // run cypress job 
-        //                     sh 'kubectl get all -n cypress'
-        //                     sh 'kubectl apply -f cypress/kubernetes'
-
-
-                            
-        //                 } else {
-        //                     echo "UI pod not yet found/up. Returned status code - ${statusCode} when probed"
-        //                     echo "Retrying in ${delaySeconds} seconds..."
-        //                     sleep delaySeconds
-        //                 }
-                        
-        //             }
-        //         }
-        //     }
-        // }
-
-
-        // stage('Get Cypress Job Pod Name') {
-        //     steps {
-        //         script {
-        //                 cypressPod = sh(script: "kubectl get pods -n cypress -l job-name=e2e-test-app-job -o jsonpath='{.items[0].metadata.name}'", returnStdout: true).trim()
-        //                 echo "Found Cypress pod name: $cypressPod"
-                    
-        //         }
-        //     }
-        // }
-
-            
-
-        // stage('Wait for tests to run and generate report') {
-        //     steps {
-        //         script {
-
-        //             echo "Awaiting report generation"
-
-        //             waitForReport(uiPod)
-
-        //             sh "kubectl exec -n cypress $uiPod -- cat /shared/cypress/reports/html/index.html > report_build_${env.BUILD_NUMBER}.html"
-        //             archiveArtifacts artifacts: "report_build_${env.BUILD_NUMBER}.html", onlyIfSuccessful: true
-
-        //         }
-        //     }
-        // }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        stage('check stuff') {
-            steps {
-                script {
-                    // sh " kubectl get pv efs-pv-cypress -o yaml"
-                    sh "kubectl -n cypress get all"
-                    // sh "kubectl describe pod/express-app-5868df5d9f-htdbk -n cypress"
+        //             // sh " kubectl get pv efs-pv-cypress -o yaml"
+        //             sh "kubectl -n cypress get all"
+        //             // sh "kubectl describe pod/express-app-5868df5d9f-htdbk -n cypress"
 
 
                      
 
-                    // sh 'kubectl exec -n cypress ui-app-bdf6dd845-cgg2f -- pwd'
-                    // sh 'kubectl exec -n cypress ui-app-bdf6dd845-cgg2f -- ls -la'
-                    // sh 'kubectl describe pod/e2e-test-app-job-x2d6w -n cypress'
-                    // sh 'kubectl logs -n cypress e2e-test-app-job-x2d6w -c e2e-test-app'
+        //             // sh 'kubectl exec -n cypress ui-app-bdf6dd845-cgg2f -- pwd'
+        //             // sh 'kubectl exec -n cypress ui-app-bdf6dd845-cgg2f -- ls -la'
+        //             // sh 'kubectl describe pod/e2e-test-app-job-x2d6w -n cypress'
+        //             // sh 'kubectl logs -n cypress e2e-test-app-job-x2d6w -c e2e-test-app'
 
-                    sh 'kubectl describe pod/ui-app-67fbfff779-dxzf5  -n cypress'
-                    sh 'kubectl logs -n cypress ui-app-67fbfff779-dxzf5  -c ui-app'
+        //             sh 'kubectl describe pod/ui-app-67fbfff779-dxzf5  -n cypress'
+        //             sh 'kubectl logs -n cypress ui-app-67fbfff779-dxzf5  -c ui-app'
                     
-                    sh 'kubectl describe pod/express-app-5868df5d9f-92tr8 -n cypress'
-                    sh 'kubectl logs -n cypress express-app-5868df5d9f-92tr8 -c express-app'
-                }
-            }
-        }
+        //             sh 'kubectl describe pod/express-app-5868df5d9f-92tr8 -n cypress'
+        //             sh 'kubectl logs -n cypress express-app-5868df5d9f-92tr8 -c express-app'
+        //         }
+        //     }
+        // }
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        
 
         stage('Docker hub authentication'){
             steps{
