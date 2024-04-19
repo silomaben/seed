@@ -23,6 +23,7 @@ pipeline {
                 script {
                     // sh " kubectl get pv efs-pv-cypress -o yaml"
                     sh "kubectl -n cypress get all"
+                    sh "kubectl describe pod/express-app-7677b5dccc-wb6lh -n cypress"
                     // sh 'kubectl exec -n cypress ui-app-bdf6dd845-cgg2f -- pwd'
                     // sh 'kubectl exec -n cypress ui-app-bdf6dd845-cgg2f -- ls -la'
                     // sh 'kubectl describe pod/e2e-test-app-job-5k4zc -n cypress'
