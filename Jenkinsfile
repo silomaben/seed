@@ -23,17 +23,17 @@ pipeline {
                 script {
 
                                 
-                    sh "kubectl delete -n cypress job e2e-test-app-job"
+                    // sh "kubectl delete -n cypress job e2e-test-app-job"
 
 
                     //                   sh 'kubectl describe pod/e2e-test-app-job-x2d6w -n cypress'
                     // sh 'kubectl logs -n cypress e2e-test-app-job-x2d6w -c e2e-test-app'
 
-                    sh 'kubectl describe pod/ui-app-67fbfff779-d6bsl -n cypress'
-                    sh 'kubectl logs -n cypress ui-app-67fbfff779-d6bsl -c ui-app'
+                    sh 'kubectl describe pod/ui-app-67fbfff779-dxzf5 -n cypress'
+                    sh 'kubectl logs -n cypress ui-app-67fbfff779-dxzf5 -c ui-app'
                     
-                    sh 'kubectl describe pod/express-app-5868df5d9f-bxg9n -n cypress'
-                    sh 'kubectl logs -n cypress express-app-5868df5d9f-bxg9n -c express-app'
+                    sh 'kubectl describe pod/express-app-5868df5d9f-92tr8 -n cypress'
+                    sh 'kubectl logs -n cypress express-app-5868df5d9f-92tr8 -c express-app'
                                 
                     
                 }
