@@ -22,5 +22,7 @@ spec:
           ports:
             - containerPort: 3000
           imagePullPolicy: Always
+      imagePullSecrets:
+        - name: regcred
       restartPolicy: Always
 

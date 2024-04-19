@@ -30,3 +30,5 @@ spec:
           persistentVolumeClaim: 
             claimName: cypress-pvc
       restartPolicy: Always
+      imagePullSecrets:
+        - name: regcred
