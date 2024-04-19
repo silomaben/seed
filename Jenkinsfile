@@ -36,7 +36,7 @@ pipeline {
             steps{
                 script{
                                 // Create Secret to access dockerhub
-                    def docsecretExists = sh(script: "kubectl --namespace=${namespace} get secret regcred", returnStatus: true) == 0
+                    def docsecretExists = sh(script: "kubectl --namespace=cypress get secret regcred", returnStatus: true) == 0
                     if (docsecretExists) {
                         echo "Secret regcred already exists."
                     } else {
