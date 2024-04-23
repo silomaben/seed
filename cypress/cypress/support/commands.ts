@@ -14,6 +14,8 @@ declare namespace Cypress {
 Cypress.Commands.add('login', (email: string, password: string) => {
     cy.visit('/auth');
 
+    cy.wait(9000);
+
     cy.get('button[class="p-ripple p-element p-button p-component"]').click();
 
     const args = { email, password };

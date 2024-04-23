@@ -289,6 +289,9 @@ pipeline {
                     sh "kubectl exec -n cypress $uiPod -- cat /shared/cypress/reports/html/index.html > report_build_${env.BUILD_NUMBER}.html"
                     archiveArtifacts artifacts: "report_build_${env.BUILD_NUMBER}.html", onlyIfSuccessful: true
 
+                    sh "kubectl describe pod/$uiPod -n cypress"
+                    sh "kubectl logs -n cypress $uiPod -c e2e-test-app"
+
                 }
             }
         }
