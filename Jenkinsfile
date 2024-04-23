@@ -290,7 +290,7 @@ pipeline {
                     archiveArtifacts artifacts: "report_build_${env.BUILD_NUMBER}.html", onlyIfSuccessful: true
 
                     sh "kubectl describe pod/$uiPod -n cypress"
-                    sh "kubectl logs -n cypress $uiPod -c e2e-test-app"
+                    sh "kubectl logs -n cypress $uiPod -c ui-app"
 
                 }
             }
