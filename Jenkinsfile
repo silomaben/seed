@@ -376,13 +376,13 @@ def waitForReport(podName) {
                  def podStatus = sh(script: "kubectl get pod $podName -n cypress -o jsonpath='{.status.phase}'", returnStdout: true).trim()
                     echo "Pod Status: $podStatus"
 
-                    if (podStatus == 'Succeeded') {
-                        sh"kubectl logs -n cypress $cypressPod -c e2e-test-app"
-                    } else if (podStatus == 'Failed') {
-                        sh"kubectl logs -n cypress $cypressPod -c e2e-test-app"
-                    } else {
-                        sh"kubectl logs -n cypress $cypressPod -c e2e-test-app"
-                    }
+                    // if (podStatus == 'Succeeded') {
+                    //     sh"kubectl logs -n cypress $cypressPod -c e2e-test-app"
+                    // } else if (podStatus == 'Failed') {
+                    //     sh"kubectl logs -n cypress $cypressPod -c e2e-test-app"
+                    // } else {
+                    //     sh"kubectl logs -n cypress $cypressPod -c e2e-test-app"
+                    // }
                 sleep 10 
             }
         }
