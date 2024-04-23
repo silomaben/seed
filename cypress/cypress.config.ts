@@ -12,9 +12,9 @@ export default defineConfig({
     quest: true
   },
   e2e: {
-    'baseUrl': 'http://ui-app-service.cypress',
+    'baseUrl': 'http://ui-app-service.cypress/auth',
     setupNodeEvents(on, config) {
-      require('cypress-mochawesome-reporter/plugin')(on);
+      // require('cypress-mochawesome-reporter/plugin')(on);
     },
   },
 });
