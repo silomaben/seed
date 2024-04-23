@@ -35,9 +35,9 @@ pipeline {
                     sh 'kubectl describe pod/e2e-test-app-job-6bg5j -n cypress'
                     sh 'kubectl logs -n cypress e2e-test-app-job-6bg5j -c e2e-test-app'
 
-                    sh 'kubectl exec -n cypress e2e-test-app-job-6bg5j -- ls -la /shared/cypress/reports/html'
+                    sh 'kubectl exec -n cypress ui-app-67fbfff779-wsfhz -- ls -la /shared/cypress/reports/html'
 
-                    
+
                     // sh 'kubectl describe pod/ui-app-67fbfff779-dxzf5  -n cypress'
                     // sh 'kubectl logs -n cypress ui-app-67fbfff779-dxzf5  -c ui-app'
                     
