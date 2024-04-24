@@ -379,7 +379,7 @@ def waitForReport(podName) {
                 counter++ 
                 echo "Waiting for index.html file to exist... (Attempt ${counter})"
 
-                 def podStatus = sh(script: "kubectl get pod $podName -n cypress -o jsonpath='{.status.phase}'", returnStdout: true).trim()
+                 def podStatus = sh(script: "kubectl get pod $cypressPod -n cypress -o jsonpath='{.status.phase}'", returnStdout: true).trim()
                     echo "Pod Status: $podStatus"
 
                     // sh "kubectl describe pod/$cypressPod -n cypress"

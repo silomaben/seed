@@ -2,9 +2,9 @@ import '../support/commands';
 
 it('confirm dashboard content area contains all the categories and redirects to respective pages  onclick.', () => {
     // cy.login(`${Cypress.env('QA_EMAIL')}`, `${Cypress.env('QA_PASSWORD')}`);
-    cy.visit("/testwithsteve")
+    cy.visit("/auth")
 
-    cy.get('.ml-4 > .text-900').click()
+    // cy.get('.ml-4 > .text-900').click()
 
     cy.wait(30000);
 
