@@ -1,4 +1,4 @@
-FROM cypress/included
+FROM cypress/factory
 
 WORKDIR /app
 
