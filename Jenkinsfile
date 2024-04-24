@@ -157,14 +157,14 @@ pipeline {
             }
         }
 
-        // stage('Start API Pod') {
-        //     steps {
-        //         script {
-        //             echo "Starting API"
-        //             sh 'kubectl apply -f api/kubernetes'
-        //         }
-        //     }
-        // }
+        stage('Start API Pod') {
+            steps {
+                script {
+                    echo "Starting API"
+                    sh 'kubectl apply -f api/kubernetes'
+                }
+            }
+        }
 
         
         stage('Start UI Pod') {
@@ -177,30 +177,30 @@ pipeline {
 
                     sh "kubectl apply -f ui/kubernetes"
 
-                    // retry(retries) {
+                    retry(retries) {
 
-                    //     attempts++
+                        attempts++
 
-                    //     echo "Finding API pod... Attempt ${attempts}"
+                        echo "Finding API pod... Attempt ${attempts}"
 
-                    //     // Execute curl command to check if api endpoint returns successful response ... Health Check
-                    //     def statusOutput = sh(script: 'curl -s -o /dev/null -w "%{http_code}" http://express-app-service.cypress/v3', returnStdout: true).trim()
+                        // Execute curl command to check if api endpoint returns successful response ... Health Check
+                        def statusOutput = sh(script: 'curl -s -o /dev/null -w "%{http_code}" http://express-app-service.cypress/v3', returnStdout: true).trim()
                             
-                    //     // Convert output to integer
-                    //     def statusCode = statusOutput.toInteger()
+                        // Convert output to integer
+                        def statusCode = statusOutput.toInteger()
 
-                    //     if (statusCode == 200) {
-                    //         echo "Found API pod. Now starting UI pod"
-                    //         sh "kubectl apply -f ui/kubernetes"
-                    //     } else {
-                    //         echo "API pod not yet found/up. Returned status code - ${statusCode} when probed"
-                    //         echo "Retrying in ${delaySeconds} seconds..."
-                    //         sleep delaySeconds
-                    //     }
+                        if (statusCode == 200) {
+                            echo "Found API pod. Now starting UI pod"
+                            sh "kubectl apply -f ui/kubernetes"
+                        } else {
+                            echo "API pod not yet found/up. Returned status code - ${statusCode} when probed"
+                            echo "Retrying in ${delaySeconds} seconds..."
+                            sleep delaySeconds
+                        }
 
                         
                         
-                    // }
+                    }
                 }
             }
         }
