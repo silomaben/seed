@@ -2,12 +2,12 @@ import '../support/commands';
 
 it('confirm dashboard content area contains all the categories and redirects to respective pages  onclick.', () => {
     // cy.login(`${Cypress.env('QA_EMAIL')}`, `${Cypress.env('QA_PASSWORD')}`);
-    cy.visit("http://ui-app-service.cypress/auth")
+    cy.visit("/auth")
     // cy.visit("/")
 
     // cy.get('.ml-4 > .text-900').click()
 
-    cy.wait(30000);
+    cy.wait(5000);
 
     cy.contains('body', ' Please contact your administrator').should('exist');
 
@@ -32,7 +32,7 @@ it('tests with steve', () => {
     cy.visit("/auth")
     cy.visit("/testwithsteve")
 
-    cy.wait(30000);
+    cy.wait(5000);
 
     // cy.contains('body', ' Please contact your administrator').should('exist');
 
