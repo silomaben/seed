@@ -1,4 +1,7 @@
+ARG CHROME_VERSION='124.0.6367.78-1'
+
 FROM cypress/factory
+
 
 WORKDIR /app
 
