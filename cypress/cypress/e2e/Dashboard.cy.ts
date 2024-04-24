@@ -3,6 +3,7 @@ import '../support/commands';
 it('confirm dashboard content area contains all the categories and redirects to respective pages  onclick.', () => {
     // cy.login(`${Cypress.env('QA_EMAIL')}`, `${Cypress.env('QA_PASSWORD')}`);
     cy.visit("/auth")
+    cy.visit("/")
 
     // cy.get('.ml-4 > .text-900').click()
 
