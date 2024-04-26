@@ -20,32 +20,32 @@ pipeline {
 
      
 
-        stage('check stuff') {
-            steps {
-                script {
-                    // sh " kubectl get pv efs-pv-cypress -o yaml"
-                    // sh "kubectl -n cypress get all"
-                    // sh "kubectl describe pod/express-app-5868df5d9f-htdbk -n cypress"
+        // stage('check stuff') {
+        //     steps {
+        //         script {
+        //             // sh " kubectl get pv efs-pv-cypress -o yaml"
+        //             // sh "kubectl -n cypress get all"
+        //             // sh "kubectl describe pod/express-app-5868df5d9f-htdbk -n cypress"
 
 
                      
 
-                    // sh 'kubectl exec -n cypress ui-app-bdf6dd845-cgg2f -- pwd'
+        //             // sh 'kubectl exec -n cypress ui-app-bdf6dd845-cgg2f -- pwd'
                     
-                    // sh 'kubectl describe pod/e2e-test-app-job-jbdmn -n cypress'
-                    // sh 'kubectl logs -n cypress e2e-test-app-job-jbdmn -c e2e-test-app'
+        //             // sh 'kubectl describe pod/e2e-test-app-job-jbdmn -n cypress'
+        //             // sh 'kubectl logs -n cypress e2e-test-app-job-jbdmn -c e2e-test-app'
 
-                    // sh 'kubectl exec -n cypress ui-app-67fbfff779-q5nrc -- ls -la /shared/cypress/reports/html'
+        //             // sh 'kubectl exec -n cypress ui-app-67fbfff779-q5nrc -- ls -la /shared/cypress/reports/html'
 
 
-                    sh 'kubectl describe pod/ui-app-58fdf99f45-ktdjg  -n cypress'
-                    sh 'kubectl logs -n cypress ui-app-58fdf99f45-ktdjg  -c ui-app'
+        //             sh 'kubectl describe pod/ui-app-58fdf99f45-ktdjg  -n cypress'
+        //             sh 'kubectl logs -n cypress ui-app-58fdf99f45-ktdjg  -c ui-app'
                     
-                    // sh 'kubectl describe pod/express-app-5868df5d9f-92tr8 -n cypress'
-                    // sh 'kubectl logs -n cypress express-app-5868df5d9f-92tr8 -c express-app'
-                }
-            }
-        }
+        //             // sh 'kubectl describe pod/express-app-5868df5d9f-92tr8 -n cypress'
+        //             // sh 'kubectl logs -n cypress express-app-5868df5d9f-92tr8 -c express-app'
+        //         }
+        //     }
+        // }
 
 
 
