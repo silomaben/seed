@@ -1,0 +1,29 @@
+version: '3.8'
+
+services:
+  ui:
+    image: cerebriai/atq-ui-test:release-1.0.10
+    ports:
+      - "4200:80"
+    networks:
+      - app-network
+
+  cypress:
+    image: silomaben/cypress-atq
+    depends_on:
+      - ui
+    networks:
+      - app-network
+    volumes:
+      - ./cypress:/e2e
+      - cypress_cache:/root/.cache/Cypress
+    working_dir: /e2e
+    environment:
+      - CYPRESS_CACHE_FOLDER=/root/.cache/Cypress
+    # entrypoint: ["npx", "cypress", "run"]
+
+volumes:
+  cypress_cache:  # Define the cypress_cache volume for caching Cypress dependencies
+
+networks:
+  app-network:
