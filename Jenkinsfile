@@ -212,7 +212,7 @@ pipeline {
                         uiPod = sh(script: 'kubectl get pods -n cypress -l app=ui-app -o jsonpath="{.items[0].metadata.name}"', returnStdout: true).trim()
                         echo "Found UI pod name: $uiPod"
 
-                        sh "kubectl describe pod/$uiPod  -n cypress"
+                        
                     
                 }
             }
@@ -232,13 +232,13 @@ pipeline {
 
                         echo "Finding UI pod...Attempt ${attempts}"
                         
+                            sh "kubectl describe pod/$uiPod  -n cypress"
+                    sh "kubectl logs -n cypress $uiPod  -c ui-app"
                         
                         // Execute curl command to check if api endpoint returns successful response
                         def statusOutput = sh(script: 'curl -s -o /dev/null -w "%{http_code}" http://ui-app-service.cypress', returnStdout: true).trim()
 
 
-                            sh "kubectl describe pod/$uiPod  -n cypress"
-                    sh "kubectl logs -n cypress $uiPod  -c ui-app"
 
                             
                         // Convert output to integer
