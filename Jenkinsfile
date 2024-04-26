@@ -211,6 +211,8 @@ pipeline {
                         
                         uiPod = sh(script: 'kubectl get pods -n cypress -l app=ui-app -o jsonpath="{.items[0].metadata.name}"', returnStdout: true).trim()
                         echo "Found UI pod name: $uiPod"
+
+                        sh "kubectl describe pod/$uiPod  -n cypress"
                     
                 }
             }
