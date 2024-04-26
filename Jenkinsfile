@@ -236,16 +236,16 @@ pipeline {
                     sh "kubectl logs -n cypress $uiPod  -c ui-app"
                         
                         // Execute curl command to check if api endpoint returns successful response
-                        def statusOutput = sh(script: 'curl -s -o /dev/null -w "%{http_code}" http://ui-app-service.cypress', returnStdout: true).trim()
+                        // def statusOutput = sh(script: 'curl -s -o /dev/null -w "%{http_code}" http://ui-app-service.cypress', returnStdout: true).trim()
 
 
 
                             
                         // Convert output to integer
-                        def statusCode = statusOutput.toInteger()
+                        // def statusCode = statusOutput.toInteger()
 
 
-                        if (statusCode == 200) {
+                        // if (statusCode == 200) {
                             echo "Found UI. Starting Cypress Job"
 
                             // delete old cypress report if it exists
@@ -264,11 +264,11 @@ pipeline {
 
 
                             
-                        } else {
-                            echo "UI pod not yet found/up. Returned status code - ${statusCode} when probed"
-                            echo "Retrying in ${delaySeconds} seconds..."
-                            sleep delaySeconds
-                        }
+                        // } else {
+                            // echo "UI pod not yet found/up. Returned status code - ${statusCode} when probed"
+                            // echo "Retrying in ${delaySeconds} seconds..."
+                            // sleep delaySeconds
+                        // }
                         
                     }
                 }
