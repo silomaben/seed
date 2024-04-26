@@ -279,6 +279,8 @@ pipeline {
                 script {
                         cypressPod = sh(script: "kubectl get pods -n cypress -l job-name=e2e-test-app-job -o jsonpath='{.items[0].metadata.name}'", returnStdout: true).trim()
                         echo "Found Cypress pod name: $cypressPod"
+
+                        sh "kubectl describe pod/$cypressPod -n cypress"
                     
                 }
             }
