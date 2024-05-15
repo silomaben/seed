@@ -234,7 +234,7 @@ pipeline {
                         
                         // Execute curl command to check if api endpoint returns successful response
                         // def statusOutput = sh(script: 'curl -s -o /dev/null -w "%{http_code}" http://ui-app-service.cypress', returnStdout: true).trim()
-                        sh 'kubectl get ui-app-service -n cypress'
+                        sh 'kubectl get service ui-app-service -n cypress'
 
 
 
