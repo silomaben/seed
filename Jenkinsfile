@@ -110,9 +110,6 @@ pipeline {
 
 
 
-
-
-
                         // Check if any pods are found
                         if (expressAppExists || uiAppExists || expressAppServiceExists || uiAppServiceExists || e2eTestJobExists || podStatusesJson.contains("Terminating")) {
 
@@ -391,8 +388,8 @@ def waitForReport(podName) {
                  def podStatus = sh(script: "kubectl get pod $cypressPod -n cypress -o jsonpath='{.status.phase}'", returnStdout: true).trim()
                     echo "Pod Status: $podStatus"
 
-                    // sh "kubectl describe pod/$cypressPod -n cypress"
-                    // sh "kubectl logs -n cypress $cypressPod -c e2e-test-app"
+                    sh "kubectl describe pod/$cypressPod -n cypress"
+                    sh "kubectl logs -n cypress $cypressPod -c e2e-test-app"
 
                     // if (podStatus == 'Succeeded') {
                     //     sh"kubectl logs -n cypress $cypressPod -c e2e-test-app"
