@@ -9,6 +9,6 @@ spec:
   ports:
     - protocol: TCP
       port: 80
-      targetPort: 4200
+      targetPort: 42000
       nodePort: 42000
   type: NodePort
