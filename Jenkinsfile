@@ -122,7 +122,7 @@ pipeline {
         stage('Start UI Pod') {
             steps {
                 script {                            
-                        sh "kubectl apply -f ui-app/kubernetes"
+                        sh "kubectl apply -f ui/kubernetes"
                     }
                 }
             }
@@ -172,7 +172,7 @@ pipeline {
                             
 
                             // run cypress job 
-                            sh 'kubectl apply -f cypress-tests/kubernetes'
+                            sh 'kubectl apply -f cypress/kubernetes'
                         } else {
                             echo "UI pod not yet found/up. Returned status code - ${statusCode} when probed"
                             echo "Retrying in ${delaySeconds} seconds..."
