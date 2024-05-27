@@ -236,11 +236,15 @@ pipeline {
 
                     if (logs.contains("All specs passed")) {
                         echo "All tests passed!"
-                        emailext(
-                            subject: "Pipeline Successful",
-                            body: "Your pipeline has completed successfully.",
-                            to: "ignit3graphics@gmail.com"
-                        )
+
+                        
+                        emailext body: 'A Test EMail', recipientProviders: [[$class: 'DevelopersRecipientProvider'], [$class: 'RequesterRecipientProvider']], subject: 'Test'
+        
+                        // emailext(
+                        //     subject: "Pipeline Successful",
+                        //     body: "Your pipeline has completed successfully.",
+                        //     to: "ignit3graphics@gmail.com"
+                        // )
                         deploy = true
                     } else {
                         emailext(
