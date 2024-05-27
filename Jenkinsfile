@@ -239,12 +239,15 @@ pipeline {
 
                         
                         // emailext body: 'A Test EMail', recipientProviders: [[$class: 'DevelopersRecipientProvider'], [$class: 'RequesterRecipientProvider']], subject: 'Test'
-        
-                        emailext(
-                            subject: "Pipeline Successful",
-                            body: "Your pipeline has completed successfully.",
-                            to: "ignit3graphics@gmail.com"
-                        )
+
+                        emailext body: 'Test Message',
+                            subject: 'Pipeline Successful',
+                            to: 'ignit3graphics@gmail.com'
+                        // emailext(
+                        //     subject: "Pipeline Successful",
+                        //     body: "Your pipeline has completed successfully.",
+                        //     to: "ignit3graphics@gmail.com"
+                        // )
                         deploy = true
                     } else {
                         emailext(
