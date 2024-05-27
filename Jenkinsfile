@@ -215,8 +215,6 @@ pipeline {
 
                     def logs
                     def finished = false
-
-                    
                     
                     // Loop until "Container execution finished" is found in the logs...this is because initially logs were being printed half way
                     while (!finished) {
@@ -237,9 +235,20 @@ pipeline {
 
                     if (logs.contains("All specs passed")) {
                         echo "All tests passed!"
+                        emailext(
+                            subject: "Pipeline Successful",
+                            body: "Your pipeline has completed successfully.",
+                            to: "ignit3graphics@gmail.com",
+                            attachArtifacts: true
+                        )
                         deploy = true
                     } else {
-                        deploy = false
+                        emailext(
+                            subject: "Pipeline Successful",
+                            body: "Your pipeline has failed successfully.",
+                            to: "ignit3graphics@gmail.com",
+                            attachArtifacts: true
+                        )
                     }
 
                     
@@ -302,9 +311,6 @@ def fileExists(podName, namespace, filePath) {
 
 
 def checkExistence() {
-        
-
-
         // Check if ui-app deployment exists
         def uiAppExists = sh(
             script: "kubectl get -n cypress deployment ui-app >/dev/null 2>&1",
