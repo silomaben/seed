@@ -296,11 +296,9 @@ pipeline {
                         
                         // emailext body: 'A Test EMail', recipientProviders: [[$class: 'DevelopersRecipientProvider'], [$class: 'RequesterRecipientProvider']], subject: 'Test'
 
-                        // Run the Python script with the variables and artifact paths
-                        def command = "python3 script.py \"${subject}\" \"${body}\" \"${toEmail}\" \"${fromEmail}\" \"${emailPassword}\""
-                        artifacts.each { command += " \"${it}\"" }
-
-                        sh command
+                         sh """
+                        python3 script.py "${subject}" "${body}" "${toEmail}" "${fromEmail}" "${emailPassword}"
+                        """
 
                         // emailext(
                         //     subject: "Pipeline Successful",
