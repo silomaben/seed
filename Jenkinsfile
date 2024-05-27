@@ -17,6 +17,35 @@ pipeline {
     }
 
     stages {
+
+         stage('Docker hub authentication'){
+            steps{
+                script{
+                                // Create Secret to access dockerhub
+                    def docsecretExists = sh(script: "kubectl --namespace=cypress get secret regcred", returnStatus: true) == 0
+                    if (docsecretExists) {
+                        echo "Secret regcred already exists."
+                    } else {
+                        // Create the secret
+                        def DOCKER_EMAIL = 'software@cerebriai.com'
+                        withCredentials([usernamePassword(credentialsId: 'docker-sw',
+                        usernameVariable: 'DOCKER_USER',
+                        passwordVariable: 'DOCKER_PASS')]) {
+                            sh """
+                                kubectl create secret docker-registry regcred \
+                                    --docker-server=https://index.docker.io/v1/ \
+                                    --docker-username=${DOCKER_USER} \
+                                    --docker-password=${DOCKER_PASS} \
+                                    --docker-email=${DOCKER_EMAIL} \
+                                    --namespace=cypress
+                                """
+                        }
+                    }
+                }
+                    
+                
+            }
+        }
          
 
        stage('Kill pods if running') {
