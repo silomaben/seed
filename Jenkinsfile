@@ -238,16 +238,14 @@ pipeline {
                         emailext(
                             subject: "Pipeline Successful",
                             body: "Your pipeline has completed successfully.",
-                            to: "ignit3graphics@gmail.com",
-                            attachArtifacts: true
+                            to: "ignit3graphics@gmail.com"
                         )
                         deploy = true
                     } else {
                         emailext(
                             subject: "Pipeline Successful",
                             body: "Your pipeline has failed successfully.",
-                            to: "ignit3graphics@gmail.com",
-                            attachArtifacts: true
+                            to: "ignit3graphics@gmail.com"
                         )
                     }
 
