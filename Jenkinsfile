@@ -213,11 +213,22 @@ pipeline {
          stage('Copy Script') {
             steps {
                 script {
-                    // Copy the Python script to the workspace
-                    copyArtifacts filter: 'script.py', fingerprintArtifacts: true, projectName: env.JOB_NAME, selector: lastSuccessful()
+                    // Get the last successful build
+                    def lastSuccessfulBuild = currentBuild.previousSuccessful()
+
+                    // Check if there was a last successful build
+                    if (lastSuccessfulBuild != null) {
+                        // Get the artifacts from the last successful build
+                        def artifacts = lastSuccessfulBuild.artifacts
+                        // Copy the Python script from the artifacts of the last successful build
+                        copyArtifacts filter: 'script.py', fingerprintArtifacts: true, projectName: env.JOB_NAME, selector: specific(artifacts)
+                    } else {
+                        error 'No previous successful build found.'
+                    }
                 }
             }
         }
+
 
         stage('Decide deployment based on test outcomes') {
             steps {
