@@ -157,7 +157,7 @@ pipeline {
                         echo "Pod Status: $podStatus"
 
                         sh "kubectl describe pod/$uiPod -n cypress"
-                        sh "kubectl logs -n cypress $uiPod -c e2e-test-app"
+                        // sh "kubectl logs -n cypress $uiPod -c e2e-test-app"
 
                         if (podStatus == 'Running') {
                             echo "Found UI. Starting Cypress Job"
