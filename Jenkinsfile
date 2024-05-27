@@ -168,9 +168,6 @@ pipeline {
                                 sh "kubectl exec -n cypress $uiPod -- rm /shared/cypress/reports/html/index.html"
                             }
 
-                            
-                            
-
                             // run cypress job 
                             sh 'kubectl apply -f cypress/kubernetes'
                         } else {
@@ -281,15 +278,16 @@ pipeline {
 }
 
 def waitForReport(podName) {
-    timeout(time: 5, unit: 'MINUTES') {
+    timeout(time: 10, unit: 'MINUTES') {
         script {
             def counter = 0 
             while (!fileExists(podName,'cypress','/shared/cypress/reports/html/index.html')) {
-                sh "kubectl get -n cypress job e2e-test-app-job"
                 sh "kubectl exec -n cypress $uiPod -- ls -la /shared/cypress/reports"
+                sh "kubectl get -n cypress job e2e-test-app-job"
+                sh "kubectl logs -n cypress $cypressPod -c e2e-test-app"
                 counter++ 
                 echo "Waiting for index.html file to exist... (Attempt ${counter})"
-                sleep 10 
+                sleep 20 
             }
         }
     }
