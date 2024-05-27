@@ -236,6 +236,7 @@ pipeline {
                     // Embedded Python script
                     def pythonScript = """
 import smtplib
+import sys
 
 def send_email(subject, body, to_email, from_email, password, attachment_paths):
     server = smtplib.SMTP("smtp.gmail.com", 465)
