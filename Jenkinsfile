@@ -199,6 +199,7 @@ pipeline {
                 script {
 
                     echo "Awaiting report generation"
+                    sleep 30
 
                     waitForReport(uiPod)
 
