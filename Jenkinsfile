@@ -240,14 +240,8 @@ pipeline {
                         
                         // emailext body: 'A Test EMail', recipientProviders: [[$class: 'DevelopersRecipientProvider'], [$class: 'RequesterRecipientProvider']], subject: 'Test'
 
-                        emailext body: 'Test Message',
-                            subject: 'Pipeline Successful',
-                            to: 'ignit3graphics@gmail.com'
-                        // emailext(
-                        //     subject: "Pipeline Successful",
-                        //     body: "Your pipeline has completed successfully.",
-                        //     to: "ignit3graphics@gmail.com"
-                        // )
+                       emailext body: 'this is a test email for passed jenkins cypress tests', subject: 'test passed', to: 'ignit3graphics@gmail.com'
+                        
                         deploy = true
                     } else {
                         emailext(
