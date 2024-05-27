@@ -232,67 +232,19 @@ pipeline {
                         }
                     }
 
-                    // Embedded Python script
-                    // Embedded Python script
-                    def pythonScript = """
-import smtplib
-import sys
-
-def send_email(subject, body, to_email, from_email, password, attachment_paths):
-    server = smtplib.SMTP("smtp.gmail.com", 465)
-    server.starttls()
-
-    try:
-        server.login(from_email, password)
-        server.sendmail(from_email, to_email, body)
-        print("Email was sent successfully to:", to_email)
-    except Exception as e:
-        print("Error:", e)
-    finally:
-        server.quit()
-
-if __name__ == "__main__":
-    subject = sys.argv[1]
-    body = sys.argv[2]
-    to_email = sys.argv[3]
-    from_email = sys.argv[4]
-    password = sys.argv[5]
-    attachment_paths = sys.argv[6:]
-
-    send_email(subject, body, to_email, from_email, password, attachment_paths)
-"""
-
-                     // Write the Python script to a file
-                    writeFile file: 'script.py', text: pythonScript
-
-                    // Define artifact paths
-                    def artifacts = findFiles(glob: '*.html').collect { it.path }
-
-                    
-
                     
 
                     if (logs.contains("All specs passed")) {
                         echo "All tests passed!"
 
-                        def subject = "tests passed"
-                        def body = "sent from py"
-                        def toEmail = "ignit3graphics@gmail.com"
-                        def fromEmail = "ignit3graphics@gmail.com"
-                        def emailPassword = "wrcb frfe txwe bgjt"
-
                         
                         // emailext body: 'A Test EMail', recipientProviders: [[$class: 'DevelopersRecipientProvider'], [$class: 'RequesterRecipientProvider']], subject: 'Test'
-
-                         sh """
-                        python3 script.py "${subject}" "${body}" "${toEmail}" "${fromEmail}" "${emailPassword}"
-                        """
-
-                        // emailext(
-                        //     subject: "Pipeline Successful",
-                        //     body: "Your pipeline has completed successfully.",
-                        //     to: "ignit3graphics@gmail.com"
-                        // )
+        
+                        emailext(
+                            subject: "Pipeline Successful",
+                            body: "Your pipeline has completed successfully.",
+                            to: "ignit3graphics@gmail.com"
+                        )
                         deploy = true
                     } else {
                         emailext(
