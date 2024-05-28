@@ -237,7 +237,10 @@ pipeline {
                     if (logs.contains("All specs passed")) {
                         echo "All tests passed!"
 
-                       emailext body: 'this is a test email for passed jenkins cypress tests', subject: 'test passed', to: 'ignit3graphics@gmail.com'
+                       emailext body: 'this is a test email for passed jenkins cypress tests',
+                                subject: 'test passed',
+                                to: 'ignit3graphics@gmail.com',
+                                attachmentsPattern: "report_build_${env.BUILD_NUMBER}.html"
                         
                         deploy = true
                     } else {
@@ -245,7 +248,8 @@ pipeline {
                         emailext(
                             subject: "Pipeline Successful",
                             body: "Your pipeline has failed successfully.",
-                            to: "ignit3graphics@gmail.com"
+                            to: "ignit3graphics@gmail.com",
+                            attachmentsPattern: "report_build_${env.BUILD_NUMBER}.html"
                         )
                     }
 
