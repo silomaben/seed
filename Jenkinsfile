@@ -245,6 +245,7 @@ pipeline {
                         deploy = true
                     } else {
                         echo"test faild"
+                        currentBuild.result = 'FAILURE'
                         emailext(
                             subject: "Pipeline Successful",
                             body: "Your pipeline has failed successfully.",
