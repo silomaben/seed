@@ -263,7 +263,7 @@ For more details, you can check the attached report and video files.
 
 Kindly look into these issues at your earliest convenience to ensure the stability of our application.""",
 
-                                subject: "ALERT: E2E Test Failures in Jenkins at Kenyan Time: ${kenyanTime}, US Time: ${atlantaTime}",
+                                subject: "ALERT: Login Failures in Prod",
                                 to: 'benard.masikonde@griffinglobaltech.com',
                                 attachmentsPattern: "report_build_${env.BUILD_NUMBER}.html,Login_Video_build_${env.BUILD_NUMBER}.mp4"
 
