@@ -209,6 +209,7 @@ pipeline {
                     sh "kubectl exec -n cypress $uiPod -- ls -la /shared/cypress"
                     sh "kubectl exec -n cypress $uiPod -- ls -la /shared/cypress/reports"
                     sh "kubectl exec -n cypress $uiPod -- ls -la /shared/cypress/reports/html"
+                    sh "kubectl exec -n cypress $uiPod -- ls -la /shared/cypress/reports/html/videos"
                     sh "kubectl exec -n cypress $uiPod -- ls -la /shared/cypress/reports/cypress"
                     sh "kubectl exec -n cypress $uiPod -- ls -la /shared/cypress/reports/cypress/results"
                     sh "kubectl exec -n cypress $uiPod -- ls -la /shared/cypress/reports/cypress/results/html"
