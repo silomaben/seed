@@ -208,7 +208,10 @@ pipeline {
                     sh "kubectl exec -n cypress $uiPod -- ls -la /shared"
                     sh "kubectl exec -n cypress $uiPod -- ls -la /shared/cypress"
                     sh "kubectl exec -n cypress $uiPod -- ls -la /shared/cypress/reports"
+                    sh "kubectl exec -n cypress $uiPod -- ls -la /shared/cypress/reports/out"
                     sh "kubectl exec -n cypress $uiPod -- ls -la /shared/cypress/reports/cypress"
+                    sh "kubectl exec -n cypress $uiPod -- ls -la /shared/cypress/reports/cypress/results"
+                    sh "kubectl exec -n cypress $uiPod -- ls -la /shared/cypress/reports/cypress/reports"
                     sh "kubectl exec -n cypress $uiPod -- ls -la /shared/cypress/reports/videos"
                     // sh "kubectl exec -n cypress $uiPod -- cat /shared/cypress/reports/html/index.html > video_recording_build_${env.BUILD_NUMBER}.html"
                     archiveArtifacts artifacts: "report_build_${env.BUILD_NUMBER}.html", onlyIfSuccessful: true
