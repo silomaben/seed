@@ -252,13 +252,14 @@ pipeline {
                     } else {
                         def kenyanTime = new Date().format("yyyy-MM-dd HH:mm:ss", TimeZone.getTimeZone('Africa/Nairobi'))
                         def atlantaTime = new Date().format("yyyy-MM-dd HH:mm:ss", TimeZone.getTimeZone('America/New_York'))
-                        emailext body: """Hello Team,
+                        emailext body: 
+"""Hello Team,
 
-                                        The end-to-end (E2E) Cypress tests have encountered failures in the recent Jenkins build #${env.BUILD_NUMBER}.
+The end-to-end (E2E) Cypress tests have encountered failures in the recent Jenkins build #${env.BUILD_NUMBER}.
                                         
-                                        For more details, you can check the attached report and video files.
+For more details, you can check the attached report and video files.
 
-                                        Kindly look into these issues at your earliest convenience to ensure the stability of our application.""",
+Kindly look into these issues at your earliest convenience to ensure the stability of our application.""",
 
                                 subject: "ALERT: E2E Test Failures in Jenkins at Kenyan Time: ${kenyanTime}, US Time: ${atlantaTime}",
                                 to: 'benard.masikonde@griffinglobaltech.com',
