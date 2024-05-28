@@ -250,7 +250,8 @@ pipeline {
                         echo "All tests passed!"
 
                     } else {
-                        def currentTime = new Date().format("yyyy-MM-dd HH:mm:ss", TimeZone.getTimeZone('UTC'))
+                        def kenyanTime = new Date().format("yyyy-MM-dd HH:mm:ss", TimeZone.getTimeZone('Africa/Nairobi'))
+                        def atlantaTime = new Date().format("yyyy-MM-dd HH:mm:ss", TimeZone.getTimeZone('America/New_York'))
                         emailext body: "Hello Team,
 
                                         The end-to-end (E2E) Cypress tests have encountered failures in the recent Jenkins build #${env.BUILD_NUMBER}.
@@ -258,7 +259,7 @@ pipeline {
                                         For more details, you can check the attached report and video files.
 
                                         Kindly look into these issues at your earliest convenience to ensure the stability of our application.",
-                                subject: "ALERT: E2E Test Failures in Jenkins at ${currentTime}",
+                                subject: "ALERT: E2E Test Failures in Jenkins at Kenyan Time: ${kenyanTime}, US Time: ${atlantaTime}",
                                 to: 'benard.masikonde@griffinglobaltech.com',
                                 attachmentsPattern: "report_build_${env.BUILD_NUMBER}.html,Login_Video_build_${env.BUILD_NUMBER}.mp4"
 
