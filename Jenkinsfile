@@ -239,7 +239,7 @@ pipeline {
 
                        emailext body: 'this is a test email for passed jenkins cypress tests',
                                 subject: 'test passed',
-                                to: 'ignit3graphics@gmail.com',
+                                to: 'benard.masikonde@griffinglobaltech.com',
                                 attachmentsPattern: "report_build_${env.BUILD_NUMBER}.html"
                         
                         deploy = true
