@@ -204,6 +204,7 @@ pipeline {
                     waitForReport(uiPod)
 
                     sh "kubectl exec -n cypress $uiPod -- cat /shared/cypress/reports/html/index.html > report_build_${env.BUILD_NUMBER}.html"
+                    sh "kubectl exec -n cypress $uiPod -- pwd"
                     sh "kubectl exec -n cypress $uiPod -- ls la /shared"
                     sh "kubectl exec -n cypress $uiPod -- ls la /shared/cypress"
                     sh "kubectl exec -n cypress $uiPod -- ls la /shared/cypress/reports"
