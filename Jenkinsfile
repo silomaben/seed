@@ -206,9 +206,9 @@ pipeline {
                     waitForReport(uiPod)
 
 
-                    echo "delete videos"
-                    sh "kubectl exec -n cypress $uiPod -- rm -rf /shared/cypress/reports/html/videos"
-                    sh "kubectl exec -n cypress $uiPod -- rm -rf /shared/cypress/reports/videos"
+                    // echo "delete videos"
+                    // sh "kubectl exec -n cypress $uiPod -- rm -rf /shared/cypress/reports/html/videos"
+                    // sh "kubectl exec -n cypress $uiPod -- rm -rf /shared/cypress/reports/videos"
 
                     sh "kubectl exec -n cypress $uiPod -- cat /shared/cypress/reports/html/index.html > report_build_${env.BUILD_NUMBER}.html"
                     sh "kubectl exec -n cypress $uiPod -- pwd"
