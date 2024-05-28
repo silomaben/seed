@@ -310,7 +310,7 @@ def waitForReport(podName) {
             while (!fileExists(podName,'cypress','/shared/cypress/reports/html/index.html')) {
                 // sh "kubectl exec -n cypress $uiPod -- ls -la /shared/cypress/reports"
                 // sh "kubectl get -n cypress job e2e-test-app-job"
-                // sh "kubectl logs -n cypress $cypressPod -c e2e-test-app"
+                sh "kubectl logs -n cypress $cypressPod -c e2e-test-app"
                 counter++ 
                 echo "Waiting for index.html file to exist... (Attempt ${counter})"
                 sleep 20 
