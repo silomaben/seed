@@ -204,9 +204,11 @@ pipeline {
                     waitForReport(uiPod)
 
                     sh "kubectl exec -n cypress $uiPod -- cat /shared/cypress/reports/html/index.html > report_build_${env.BUILD_NUMBER}.html"
-                    sh "kubectl exec -n cypress $uiPod -- ls /shared"
-                    sh "kubectl exec -n cypress $uiPod -- ls /shared/cypress"
-                    sh "kubectl exec -n cypress $uiPod -- ls /shared/cypress/reports"
+                    sh "kubectl exec -n cypress $uiPod -- ls la /shared"
+                    sh "kubectl exec -n cypress $uiPod -- ls la /shared/cypress"
+                    sh "kubectl exec -n cypress $uiPod -- ls la /shared/cypress/reports"
+                    sh "kubectl exec -n cypress $uiPod -- ls la /shared/cypress/reports/cypress"
+                    sh "kubectl exec -n cypress $uiPod -- ls la /shared/cypress/reports/videos"
                     // sh "kubectl exec -n cypress $uiPod -- cat /shared/cypress/reports/html/index.html > video_recording_build_${env.BUILD_NUMBER}.html"
                     archiveArtifacts artifacts: "report_build_${env.BUILD_NUMBER}.html", onlyIfSuccessful: true
 
@@ -292,9 +294,9 @@ def waitForReport(podName) {
         script {
             def counter = 0 
             while (!fileExists(podName,'cypress','/shared/cypress/reports/html/index.html')) {
-                sh "kubectl exec -n cypress $uiPod -- ls -la /shared/cypress/reports"
-                sh "kubectl get -n cypress job e2e-test-app-job"
-                sh "kubectl logs -n cypress $cypressPod -c e2e-test-app"
+                // sh "kubectl exec -n cypress $uiPod -- ls -la /shared/cypress/reports"
+                // sh "kubectl get -n cypress job e2e-test-app-job"
+                // sh "kubectl logs -n cypress $cypressPod -c e2e-test-app"
                 counter++ 
                 echo "Waiting for index.html file to exist... (Attempt ${counter})"
                 sleep 20 
