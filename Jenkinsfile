@@ -204,6 +204,8 @@ pipeline {
                     waitForReport(uiPod)
 
                     sh "kubectl exec -n cypress $uiPod -- cat /shared/cypress/reports/html/index.html > report_build_${env.BUILD_NUMBER}.html"
+                    sh "kubectl exec -n cypress $uiPod -- ls /shared"
+                    sh "kubectl exec -n cypress $uiPod -- ls /shared/cypress"
                     sh "kubectl exec -n cypress $uiPod -- ls /shared/cypress/reports"
                     // sh "kubectl exec -n cypress $uiPod -- cat /shared/cypress/reports/html/index.html > video_recording_build_${env.BUILD_NUMBER}.html"
                     archiveArtifacts artifacts: "report_build_${env.BUILD_NUMBER}.html", onlyIfSuccessful: true
