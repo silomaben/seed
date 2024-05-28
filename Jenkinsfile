@@ -205,11 +205,11 @@ pipeline {
 
                     sh "kubectl exec -n cypress $uiPod -- cat /shared/cypress/reports/html/index.html > report_build_${env.BUILD_NUMBER}.html"
                     sh "kubectl exec -n cypress $uiPod -- pwd"
-                    sh "kubectl exec -n cypress $uiPod -- ls la /shared"
-                    sh "kubectl exec -n cypress $uiPod -- ls la /shared/cypress"
-                    sh "kubectl exec -n cypress $uiPod -- ls la /shared/cypress/reports"
-                    sh "kubectl exec -n cypress $uiPod -- ls la /shared/cypress/reports/cypress"
-                    sh "kubectl exec -n cypress $uiPod -- ls la /shared/cypress/reports/videos"
+                    sh "kubectl exec -n cypress $uiPod -- ls -la /shared"
+                    sh "kubectl exec -n cypress $uiPod -- ls -la /shared/cypress"
+                    sh "kubectl exec -n cypress $uiPod -- ls -la /shared/cypress/reports"
+                    sh "kubectl exec -n cypress $uiPod -- ls -la /shared/cypress/reports/cypress"
+                    sh "kubectl exec -n cypress $uiPod -- ls -la /shared/cypress/reports/videos"
                     // sh "kubectl exec -n cypress $uiPod -- cat /shared/cypress/reports/html/index.html > video_recording_build_${env.BUILD_NUMBER}.html"
                     archiveArtifacts artifacts: "report_build_${env.BUILD_NUMBER}.html", onlyIfSuccessful: true
 
@@ -244,10 +244,10 @@ pipeline {
                     if (logs.contains("All specs passed")) {
                         echo "All tests passed!"
 
-                       emailext body: 'this is a test email for passed jenkins cypress tests',
-                                subject: 'test passed',
-                                to: 'benard.masikonde@griffinglobaltech.com',
-                                attachmentsPattern: "report_build_${env.BUILD_NUMBER}.html"
+                    //    emailext body: 'this is a test email for passed jenkins cypress tests',
+                    //             subject: 'test passed',
+                    //             to: 'benard.masikonde@griffinglobaltech.com',
+                    //             attachmentsPattern: "report_build_${env.BUILD_NUMBER}.html"
                         
                         deploy = true
                     } else {
