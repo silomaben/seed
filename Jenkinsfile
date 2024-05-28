@@ -250,8 +250,8 @@ pipeline {
                         echo "All tests passed!"
 
                     } else {
-                        def kenyanTime = new Date().format("yyyy-MM-dd HH:mm:ss", TimeZone.getTimeZone('Africa/Nairobi'))
-                        def atlantaTime = new Date().format("yyyy-MM-dd HH:mm:ss", TimeZone.getTimeZone('America/New_York'))
+                        def kenyanTime = new Date().format("HH:mm:ss", TimeZone.getTimeZone('Africa/Nairobi'))
+                        def atlantaTime = new Date().format("HH:mm:ss", TimeZone.getTimeZone('America/New_York'))
                         emailext body: 
 """Hello Team,
 
