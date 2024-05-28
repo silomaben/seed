@@ -212,7 +212,7 @@ pipeline {
                     // sh "kubectl exec -n cypress $uiPod -- rm -rf /shared/cypress/reports/videos"
 
                     sh "kubectl exec -n cypress $uiPod -- cat /shared/cypress/reports/html/index.html > report_build_${env.BUILD_NUMBER}.html"
-                    sh "kubectl exec -n cypress $uiPod -- cat /shared/cypress/videos/*.mp4 > video_build_${env.BUILD_NUMBER}.mp4"
+                    sh "kubectl exec -n cypress $uiPod -- cat /shared/cypress/reports/html/videos/*.mp4 > video_build_${env.BUILD_NUMBER}.mp4"
                     sh "pwd"
                     archiveArtifacts artifacts: "report_build_${env.BUILD_NUMBER}.mp4", onlyIfSuccessful: true
 
