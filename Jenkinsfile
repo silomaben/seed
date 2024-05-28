@@ -249,20 +249,16 @@ pipeline {
                     if (logs.contains("All specs passed")) {
                         echo "All tests passed!"
 
-                       emailext body: 'this is a test email for passed jenkins cypress tests',
-                                subject: 'test passed',
+                    } else {
+                        def currentTime = new Date().format("yyyy-MM-dd HH:mm:ss", TimeZone.getTimeZone('UTC'))
+                        emailext body: 'Hello Team,
+
+                                        The end-to-end (E2E) Cypress tests have encountered failures in the recent Jenkins build #${env.BUILD_NUMBER}.',
+                                subject: "ALERT: E2E Test Failures in Jenkins at ${currentTime}",
                                 to: 'benard.masikonde@griffinglobaltech.com',
                                 attachmentsPattern: "report_build_${env.BUILD_NUMBER}.html,Login_Video_build_${env.BUILD_NUMBER}.mp4"
-                        
-                        deploy = true
-                    } else {
+
                         error "Some tests failed. Investigate and take necessary actions... Stopping pipeline."
-                        emailext(
-                            subject: "Pipeline Successful",
-                            body: "Your pipeline has failed successfully.",
-                            to: "ignit3graphics@gmail.com",
-                            attachmentsPattern: "report_build_${env.BUILD_NUMBER}.html"
-                        )
                     }
 
 
