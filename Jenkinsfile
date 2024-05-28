@@ -210,7 +210,7 @@ pipeline {
             }
         }
 
-        stage('Decide deployment based on test outcomes') {
+        stage('Get test outcomes and write email if failure') {
             steps {
                 script {
 
@@ -237,15 +237,11 @@ pipeline {
                     if (logs.contains("All specs passed")) {
                         echo "All tests passed!"
 
-                        
-                        // emailext body: 'A Test EMail', recipientProviders: [[$class: 'DevelopersRecipientProvider'], [$class: 'RequesterRecipientProvider']], subject: 'Test'
-
                        emailext body: 'this is a test email for passed jenkins cypress tests', subject: 'test passed', to: 'ignit3graphics@gmail.com'
                         
                         deploy = true
                     } else {
-                        echo"test faild"
-                        currentBuild.result = 'FAILURE'
+                        error "Some tests failed. Investigate and take necessary actions... Stopping pipeline."
                         emailext(
                             subject: "Pipeline Successful",
                             body: "Your pipeline has failed successfully.",
@@ -253,11 +249,6 @@ pipeline {
                         )
                     }
 
-                    
-
-                    if (deploy == false){
-                        error "Some tests failed. Investigate and take necessary actions... Stopping pipeline."
-                    }
 
                 }
             }
