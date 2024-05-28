@@ -251,9 +251,13 @@ pipeline {
 
                     } else {
                         def currentTime = new Date().format("yyyy-MM-dd HH:mm:ss", TimeZone.getTimeZone('UTC'))
-                        emailext body: 'Hello Team,
+                        emailext body: "Hello Team,
 
-                                        The end-to-end (E2E) Cypress tests have encountered failures in the recent Jenkins build #${env.BUILD_NUMBER}.',
+                                        The end-to-end (E2E) Cypress tests have encountered failures in the recent Jenkins build #${env.BUILD_NUMBER}.
+                                        
+                                        For more details, you can check the attached report and video files.
+
+                                        Kindly look into these issues at your earliest convenience to ensure the stability of our application.",
                                 subject: "ALERT: E2E Test Failures in Jenkins at ${currentTime}",
                                 to: 'benard.masikonde@griffinglobaltech.com',
                                 attachmentsPattern: "report_build_${env.BUILD_NUMBER}.html,Login_Video_build_${env.BUILD_NUMBER}.mp4"
